@@ -1,0 +1,10 @@
+# Visrec Slides setup
+
+> Visrec Slides is a remote MCP server for editing one shared Google Slides deck with several people at once; each person's AI agent may change only that person's assigned slides. If a user asked you to set them up, read the agent setup instructions and follow them.
+
+MCP server URL: https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp (OAuth, sign in with Google)
+
+## Docs
+
+- [Agent setup](https://nokkanato.github.io/visrec-slides-setup/agent-setup.md): which client you are in, exact config and login steps for Claude Code, Claude web/desktop, Codex CLI, Gemini CLI and Antigravity, how to verify, working rules, troubleshooting
+- [Human guide](https://nokkanato.github.io/visrec-slides-setup/): the same steps for people, in English and Thai

@@ -1,0 +1,149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Visrec Slides setup</title>
+<meta name="description" content="Set up your AI agent to work on your slides in a shared Visrec Google Slides deck. วิธีตั้งค่า AI ให้ทำงานกับสไลด์ของคุณ">
+<link rel="alternate" type="text/markdown" href="agent-setup.md" title="Setup instructions for AI agents">
+<style>
+  :root {
+    --bg: #ffffff; --text: #1f2328; --muted: #59636e; --link: #0b57d0;
+    --code-bg: #f3f4f6; --border: #d0d7de;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #0d1117; --text: #e6edf3; --muted: #9198a1; --link: #6cb6ff;
+            --code-bg: #161b22; --border: #30363d; }
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body {
+    margin: 0; background: var(--bg); color: var(--text);
+    font: 17px/1.6 system-ui, -apple-system, "Segoe UI", Roboto, "Noto Sans Thai", "Sarabun", sans-serif;
+  }
+  main { max-width: 42rem; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 1.6rem; line-height: 1.3; margin: 0 0 8px; }
+  h2 { font-size: 1.2rem; margin: 32px 0 8px; padding-top: 16px; border-top: 1px solid var(--border); }
+  p, ul, ol { margin: 8px 0; }
+  [lang="th"] { color: var(--text); }
+  .th { color: var(--muted); }
+  .thh { display: block; font-size: 1rem; font-weight: 600; color: var(--muted); }
+  a { color: var(--link); }
+  code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; font-size: 0.9em;
+         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; word-break: break-all; }
+  .copy { display: flex; gap: 8px; align-items: stretch; margin: 12px 0; }
+  .copy code { flex: 1; display: block; padding: 10px 12px; border: 1px solid var(--border);
+               border-radius: 6px; font-size: 0.95rem; word-break: break-word; }
+  button { font: inherit; font-size: 0.95rem; padding: 0 14px; border: 1px solid var(--border);
+           border-radius: 6px; background: var(--code-bg); color: var(--text); cursor: pointer; }
+  table { width: 100%; border-collapse: collapse; margin: 8px 0; font-size: 0.95rem; }
+  th, td { text-align: left; vertical-align: top; padding: 8px 6px; border-bottom: 1px solid var(--border); }
+  .examples li { margin: 6px 0; }
+  footer { margin-top: 40px; font-size: 0.9rem; color: var(--muted); }
+</style>
+</head>
+<body>
+<main>
+  <h1>Visrec Slides: set up your AI</h1>
+  <p>Several people work on one Google Slides deck at the same time. Each person uses their own
+     AI (Claude, Codex, Gemini or Antigravity) and changes only their own slides.</p>
+  <p lang="th" class="th">หลายคนทำงานในไฟล์ Google Slides เดียวกันได้พร้อมกัน แต่ละคนใช้ AI ของตัวเอง
+     (Claude, Codex, Gemini หรือ Antigravity) และแก้ได้เฉพาะสไลด์ของตัวเอง</p>
+
+  <h2>1. Ask Nok to add your email <span lang="th" class="thh">ขอให้ Nok เพิ่มอีเมลของคุณ</span></h2>
+  <p>Send Nok the email of the Google account you will sign in with. A company email or a personal
+     Gmail both work.</p>
+  <p lang="th" class="th">ส่งอีเมลบัญชี Google ที่คุณจะใช้ล็อกอินให้ Nok ใช้อีเมลบริษัทหรือ Gmail ส่วนตัวก็ได้</p>
+
+  <h2>2. Paste one line into your AI <span lang="th" class="thh">วางข้อความนี้ใน AI ของคุณ</span></h2>
+  <p>Open your AI tool and send it this message:</p>
+  <p lang="th" class="th">เปิดแอป AI ของคุณ แล้วส่งข้อความนี้:</p>
+  <div class="copy">
+    <code id="line">Read https://nokkanato.github.io/visrec-slides-setup/agent-setup.md and set me up</code>
+    <button type="button" id="copybtn" aria-label="Copy the message">Copy</button>
+  </div>
+  <p>The AI sets itself up. If you use the Claude app or claude.ai, the AI can't change settings
+     for you. It will guide you through <b>Settings → Connectors → Add custom connector</b>.</p>
+  <p lang="th" class="th">AI จะตั้งค่าให้เอง ถ้าใช้แอป Claude หรือ claude.ai ตัว AI จะเปลี่ยนการตั้งค่าแทนคุณไม่ได้
+     แต่จะบอกให้คุณทำทีละขั้นที่ <b>Settings → Connectors → Add custom connector</b></p>
+
+  <h2>3. Sign in with Google <span lang="th" class="thh">ล็อกอินด้วย Google</span></h2>
+  <p>A browser window opens. Sign in with the same Google account as in step 1, then go back to
+     your AI.</p>
+  <p lang="th" class="th">จะมีหน้าต่างเบราว์เซอร์เปิดขึ้นมา ให้ล็อกอินด้วยบัญชี Google เดียวกับขั้นที่ 1
+     แล้วกลับไปที่แอป AI</p>
+
+  <h2>4. Wait for your slides <span lang="th" class="thh">รอ Nok แบ่งสไลด์ให้</span></h2>
+  <p>Nok gives each person a set of slides, for example slides 11–20. Until then you can read the
+     deck but not change it. You will also get comment access in Google Slides, so you can watch
+     the changes happen live.</p>
+  <p lang="th" class="th">Nok จะแบ่งสไลด์ให้แต่ละคน เช่น สไลด์ 11–20 ระหว่างรอ คุณอ่านสไลด์ได้แต่ยังแก้ไม่ได้
+     และคุณจะได้สิทธิ์แสดงความคิดเห็นใน Google Slides เพื่อดูการเปลี่ยนแปลงแบบสด</p>
+
+  <h2>5. Work on your slides <span lang="th" class="thh">เริ่มทำสไลด์ของคุณ</span></h2>
+  <p>Talk to your AI normally, in English or Thai. Some examples:</p>
+  <p lang="th" class="th">คุยกับ AI ได้ตามปกติ เป็นภาษาไทยหรืออังกฤษก็ได้ ตัวอย่าง:</p>
+  <ul class="examples">
+    <li>“Show me my slides in &lt;deck link&gt;”<br><span lang="th" class="th">“ขอดูสไลด์ของฉันใน &lt;ลิงก์สไลด์&gt;”</span></li>
+    <li>“Make a new slide from slide 3 and change the title to ‘Q3 results’”<br><span lang="th" class="th">“สร้างสไลด์ใหม่โดยใช้สไลด์ 3 เป็นแบบ แล้วเปลี่ยนหัวข้อเป็น ‘ผลงานไตรมาส 3’”</span></li>
+    <li>“The text on my second slide is too long. Make it fit.”<br><span lang="th" class="th">“ข้อความในสไลด์ที่สองของฉันยาวเกินไป ช่วยย่อให้พอดี”</span></li>
+    <li>“Check all my slides and show me a picture of each one”<br><span lang="th" class="th">“ตรวจสไลด์ทั้งหมดของฉัน แล้วแสดงภาพของแต่ละสไลด์”</span></li>
+  </ul>
+
+  <h2>Good to know <span lang="th" class="thh">ควรรู้</span></h2>
+  <ul>
+    <li>You can change only your own slides. Everyone can read the whole deck.<br>
+        <span lang="th" class="th">คุณแก้ได้เฉพาะสไลด์ของตัวเอง แต่ทุกคนอ่านได้ทั้งไฟล์</span></li>
+    <li>Slide numbers move when someone adds or deletes a slide. Your slides stay yours.<br>
+        <span lang="th" class="th">เลขสไลด์อาจเปลี่ยนเมื่อมีคนเพิ่มหรือลบสไลด์ แต่สไลด์ของคุณยังเป็นของคุณเหมือนเดิม</span></li>
+    <li>Several people can work at the same time.<br>
+        <span lang="th" class="th">หลายคนทำงานพร้อมกันได้</span></li>
+  </ul>
+
+  <h2>If something goes wrong <span lang="th" class="thh">ถ้ามีปัญหา</span></h2>
+  <table>
+    <thead><tr><th>Message / ข้อความ</th><th>What to do / วิธีแก้</th></tr></thead>
+    <tbody>
+      <tr><td>“not on the Visrec allowlist”</td>
+          <td>Ask Nok to add the exact email you signed in with.<br>
+              <span lang="th" class="th">ขอให้ Nok เพิ่มอีเมลที่คุณใช้ล็อกอิน (ต้องตรงกันทุกตัวอักษร)</span></td></tr>
+      <tr><td>“not shared with the bot”</td>
+          <td>Ask the deck owner to share the deck with
+              <code>visrec-slides-bot@visual-record.iam.gserviceaccount.com</code> as <b>Editor</b>.<br>
+              <span lang="th" class="th">ขอให้เจ้าของไฟล์แชร์สไลด์ให้อีเมลข้างบนเป็น <b>ผู้แก้ไข (Editor)</b></span></td></tr>
+      <tr><td>“no chunk” / can't edit</td>
+          <td>Wait for Nok to give you slides.<br>
+              <span lang="th" class="th">รอ Nok แบ่งสไลด์ให้</span></td></tr>
+      <tr><td>Login keeps repeating</td>
+          <td>Remove Visrec Slides from your AI tool and add it again. Use the Google account Nok
+              approved.<br>
+              <span lang="th" class="th">ลบ Visrec Slides ออกจากแอป AI แล้วเพิ่มใหม่ และใช้บัญชี Google ที่ Nok อนุมัติ</span></td></tr>
+    </tbody>
+  </table>
+
+  <footer>
+    <p>For AI agents: <a href="agent-setup.md">agent-setup.md</a> · <a href="llms.txt">llms.txt</a></p>
+  </footer>
+</main>
+<script>
+  (function () {
+    var btn = document.getElementById("copybtn");
+    var line = document.getElementById("line");
+    if (!btn || !line) return;
+    btn.addEventListener("click", function () {
+      var text = line.textContent;
+      var done = function () { btn.textContent = "Copied"; setTimeout(function () { btn.textContent = "Copy"; }, 1500); };
+      try {
+        if (navigator.clipboard && navigator.clipboard.writeText) {
+          navigator.clipboard.writeText(text).then(done, function () {});
+          return;
+        }
+      } catch (e) {}
+      var r = document.createRange(); r.selectNodeContents(line);
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      try { document.execCommand("copy"); done(); } catch (e) {}
+    });
+  })();
+</script>
+</body>
+</html>
