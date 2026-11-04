@@ -68,10 +68,13 @@
      แต่จะบอกให้คุณทำทีละขั้นที่ <b>Settings → Connectors → Add custom connector</b></p>
 
   <h2>3. Sign in with Google <span lang="th" class="thh">ล็อกอินด้วย Google</span></h2>
-  <p>A browser window opens. Sign in with the same Google account as in step 1, then go back to
-     your AI.</p>
-  <p lang="th" class="th">จะมีหน้าต่างเบราว์เซอร์เปิดขึ้นมา ให้ล็อกอินด้วยบัญชี Google เดียวกับขั้นที่ 1
-     แล้วกลับไปที่แอป AI</p>
+  <p>A browser window opens. First you see a page <b>“Application Access Request”</b> from Visrec
+     Slides: click <b>Allow Access</b>. Then sign in with the same Google account as in step 1, and
+     go back to your AI. Only start the login from your own AI app, never from a link someone
+     sends you.</p>
+  <p lang="th" class="th">จะมีหน้าต่างเบราว์เซอร์เปิดขึ้นมา หน้าแรกคือ <b>“Application Access Request”</b>
+     ของ Visrec Slides ให้กด <b>Allow Access</b> จากนั้นล็อกอินด้วยบัญชี Google เดียวกับขั้นที่ 1
+     แล้วกลับไปที่แอป AI ให้เริ่มล็อกอินจากแอป AI ของคุณเองเท่านั้น อย่ากดลิงก์ล็อกอินที่คนอื่นส่งมาให้</p>
 
   <h2>4. Wait for your slides <span lang="th" class="thh">รอ Nok แบ่งสไลด์ให้</span></h2>
   <p>Nok gives each person a set of slides, for example slides 11–20. Until then you can read the
@@ -107,17 +110,18 @@
       <tr><td>“not on the Visrec allowlist”</td>
           <td>Ask Nok to add the exact email you signed in with.<br>
               <span lang="th" class="th">ขอให้ Nok เพิ่มอีเมลที่คุณใช้ล็อกอิน (ต้องตรงกันทุกตัวอักษร)</span></td></tr>
-      <tr><td>“not shared with the bot”</td>
+      <tr><td>“not shared with the bot” / “Cannot register deck”</td>
           <td>Ask the deck owner to share the deck with
               <code>visrec-slides-bot@visual-record.iam.gserviceaccount.com</code> as <b>Editor</b>.<br>
               <span lang="th" class="th">ขอให้เจ้าของไฟล์แชร์สไลด์ให้อีเมลข้างบนเป็น <b>ผู้แก้ไข (Editor)</b></span></td></tr>
       <tr><td>“no chunk” / can't edit</td>
           <td>Wait for Nok to give you slides.<br>
               <span lang="th" class="th">รอ Nok แบ่งสไลด์ให้</span></td></tr>
-      <tr><td>Login keeps repeating</td>
-          <td>Remove Visrec Slides from your AI tool and add it again. Use the Google account Nok
-              approved.<br>
-              <span lang="th" class="th">ลบ Visrec Slides ออกจากแอป AI แล้วเพิ่มใหม่ และใช้บัญชี Google ที่ Nok อนุมัติ</span></td></tr>
+      <tr><td>Login keeps repeating / “Authorization session mismatch”</td>
+          <td>Start the login again from your AI tool and finish it in the browser that opens. If it
+              repeats, remove Visrec Slides from your AI tool and add it again. Use the Google
+              account Nok approved.<br>
+              <span lang="th" class="th">เริ่มล็อกอินใหม่จากแอป AI แล้วทำให้เสร็จในเบราว์เซอร์ที่เปิดขึ้นมา ถ้ายังวนซ้ำ ให้ลบ Visrec Slides ออกจากแอป AI แล้วเพิ่มใหม่ และใช้บัญชี Google ที่ Nok อนุมัติ</span></td></tr>
     </tbody>
   </table>
 

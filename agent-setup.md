@@ -8,8 +8,9 @@ English).
 
 - MCP server URL: `https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp`
 - Server name to use in configs: `visrec-slides`
-- Login: OAuth, "Sign in with Google" in the user's browser. Never ask the user to paste a
-  password, token or login code into the chat.
+- Login: OAuth in the user's browser, in two pages: first an **"Application Access Request"**
+  page from Visrec Slides (click **Allow Access**), then "Sign in with Google". Never ask the
+  user to paste a password, token or login code into the chat.
 - Bot account that decks must be shared with: `visrec-slides-bot@visual-record.iam.gserviceaccount.com`
 
 Before you change a config file, tell the user what you are about to add. Add only the
@@ -47,8 +48,8 @@ accounts on 2026-06-18 (per geminicli.com). Paid / Workspace Gemini CLI users ca
    claude mcp add --transport http visrec-slides --scope user https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp
    ```
 2. You can't do the login yourself. Tell the user: *"Type `/mcp`, choose **visrec-slides**,
-   follow the login prompt. A browser opens. Sign in with Google using the email Nok added for
-   you."*
+   follow the login prompt. A browser opens. On the "Application Access Request" page click
+   **Allow Access**, then sign in with Google using the email Nok added for you."*
 3. After they confirm, go to Step 3. If the tools don't show up yet, ask the user to restart
    Claude Code (or start a new session) and continue from Step 3.
 
@@ -62,7 +63,9 @@ You can't change these settings yourself. Walk the user through it, one step at 
    - Name: `Visrec Slides`
    - URL: `https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp`
    - Leave the advanced / OAuth Client ID fields **empty**.
-3. Click **Add**, then **Connect**. A Google sign-in opens. Sign in with the email Nok added.
+3. Click **Add**, then **Connect**. A page "Application Access Request" opens first: check that
+   the callback address starts with `https://claude.ai/` (or `https://claude.com/`), then click
+   **Allow Access**. Then sign in with Google using the email Nok added.
 4. In a chat, make sure the **Visrec Slides** connector is turned on (the tools / "+" menu in the
    message box).
 5. If there is no "Add custom connector" button: on Claude Team/Enterprise plans only an
@@ -89,8 +92,9 @@ Then go to Step 3 (in a new chat if the tools don't appear).
    ```bash
    codex mcp login visrec-slides
    ```
-   A browser opens. The user signs in with Google using the email Nok added. In the Codex
-   desktop app, use **Authenticate** next to the server instead.
+   A browser opens. The user clicks **Allow Access** on the "Application Access Request" page,
+   then signs in with Google using the email Nok added. In the Codex desktop app, use
+   **Authenticate** next to the server instead.
 3. Ask the user to restart Codex, then go to Step 3.
 
 ## Step 2D: Gemini CLI
@@ -114,7 +118,8 @@ Then go to Step 3 (in a new chat if the tools don't appear).
    }
    ```
 2. Ask the user to restart Gemini CLI. Login is discovered automatically: on first use a browser
-   opens for Google sign-in. If not, the user types `/mcp auth visrec-slides`.
+   opens; the user clicks **Allow Access**, then signs in with Google. If not, the user types
+   `/mcp auth visrec-slides`.
 3. Go to Step 3.
 
 ## Step 2E: Antigravity CLI or IDE
@@ -134,8 +139,9 @@ Then go to Step 3 (in a new chat if the tools don't appear).
    }
    ```
 2. Tell the user: *"Type `/mcp` to open the MCP manager and reload. Then open Agent settings
-   (Cmd/Ctrl + ,) → Customizations → **Authenticate** next to visrec-slides. Sign in with Google,
-   then paste the code the browser shows back into that panel and click Submit."*
+   (Cmd/Ctrl + ,) → Customizations → **Authenticate** next to visrec-slides. Click **Allow
+   Access**, sign in with Google, then paste the code the browser shows back into that panel
+   and click Submit."*
 3. Go to Step 3.
 
 ---
@@ -188,9 +194,10 @@ Rules:
 | What you see | What it means | What to tell the user |
 |---|---|---|
 | "… is not on the Visrec allowlist" | the email they signed in with isn't approved | Ask Nok to add that exact email. Or, if they used the wrong Google account, sign out and sign in with the right one. No reinstall needed. |
-| "not shared with the bot" / "The bot cannot see deck" / "cannot edit it" | the deck isn't shared with the bot account | The deck owner must share it with `visrec-slides-bot@visual-record.iam.gserviceaccount.com` as **Editor**. |
+| "Cannot register deck … Check both" | the deck isn't shared with the bot as Editor, **or** the user isn't an owner/editor of it (shared directly to their email) | The deck owner must share it with `visrec-slides-bot@visual-record.iam.gserviceaccount.com` as **Editor**, and the person registering must own or be able to edit the deck. |
+| "not shared with the bot" / "cannot edit it" | the deck isn't shared with the bot account as Editor | The deck owner must share it with `visrec-slides-bot@visual-record.iam.gserviceaccount.com` as **Editor**. |
 | "not registered on this server yet" | nobody has set the deck up yet | A deck owner/editor (usually Nok) asks their agent to `register_deck` it. |
-| "You have no chunk in this deck" / my_chunk is empty | no slides assigned yet | Wait for Nok to assign slides. Until then the deck is read-only. |
+| "You have no chunk in this deck" / "Your chunk … has no slides now" / my_chunk is empty | no slides assigned (or they were taken away) | Wait for Nok to assign slides. Until then the deck is read-only. |
 | "not in your chunk" | that slide belongs to someone else or nobody | Don't retry. Ask Nok to assign it if they need it. |
-| Login loops, or the browser shows an error after Google sign-in | stale or failed login | Remove the server (Claude: delete the connector; CLIs: remove the entry) and add it again. Use the same Google account Nok approved. Make sure the browser isn't blocking pop-ups. If it still fails, send Nok a screenshot of the error page. |
+| Login loops, or the browser shows an error after Google sign-in ("Authorization session mismatch", "Invalid redirect URI") | stale or failed login, or the login was started in a different browser | Start the login again from the app itself and finish it in the browser that opens (don't use a login link someone sent you). If it repeats, remove the server (Claude: delete the connector; CLIs: remove the entry) and add it again. Use the same Google account Nok approved. Make sure the browser isn't blocking pop-ups. If it still fails, send Nok a screenshot of the error page. |
 | Tools don't appear after login | client hasn't reloaded | Restart the app/CLI or open a new chat. |
