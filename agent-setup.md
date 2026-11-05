@@ -185,6 +185,18 @@ decks and slides they have.
      copying any slide as a template (`from_slide`), optionally swapping text on the copy. The
      copy joins the user's chunk.
    - **`delete_slide(deck, slide)`**: only for the user's own slides.
+   - **`insert_image(deck, slide, ...)`**: put a picture on the user's slide. Give ONE source:
+     `url` (any https picture link: the server downloads it), `drive_file_id` (the user's own
+     Drive file, shared with the bot), `image_base64` (small pictures only: you must type every
+     character), or `upload_id` (see below). Where: `replace_element` = objectId of an image or a
+     shape on that slide (from `read_slide`), or a box `x, y, w, h` in EMU, or nothing = centred.
+     `fit: "crop"` fills the box and cuts the edges; the default `"fit"` shows the whole picture.
+     PNG, JPEG or GIF only, up to 20 MB (convert WebP/HEIC/SVG first).
+   - **Pictures on this computer** (a file the user gave you, or one you generated), if you can
+     run shell commands: call **`image_upload_url(deck)`**, run the `curl` command it returns
+     with the real file path (within 10 minutes), then `insert_image(deck, slide,
+     upload_id=...)`. One upload = one try at one picture; the link is private, don't show it
+     to others.
    - **`batch_update(deck, requests)`**: raw Google Slides API requests for anything else.
    - Slide numbers shift when anyone adds or deletes slides. After you add slides, re-check
      numbers with `my_chunk`, or use the slide's objectId, which never changes.
@@ -223,7 +235,7 @@ Rules:
 | "Do a storyboard" / ทำ storyboard | Ask which content, how many shots, the script. `duplicate_slide` an existing storyboard slide, `replace_text` the title, descriptions and shot texts. | Pictures: see "Put images in". |
 | "Make a Gantt chart" / ทำ Gantt chart | Read the schedule slides. Build a table with `batch_update` (`createTable`: tasks = rows, weeks = columns; colour busy cells with `updateTableCellProperties`) or bars with `createShape`. | Charts from Google Sheets are blocked; a table or shape bars is the way. |
 | "Tidy the slides" / จัดสไลด์ให้เรียบร้อย | `read_slide`, then align/resize with `updatePageElementTransform` and even font sizes with `updateTextStyle`. One slide first + `thumbnail`. | |
-| "Put images in" / ใส่รูป (incl. "make a picture of X and put it on slide 5") | `createImage` / `replaceImage` from a **public https link** (PNG/JPG/GIF). Pictures from anywhere (the web, stock sites, the client's own site) are fine by link if the user may use them. | Images the agent generates (Gemini, Codex, ChatGPT image tools) or files on the user's computer / from LINE have no public link, so they can't go in yet: tell the user plainly. Never put the client's private photos on public image sites. |
+| "Put images in" / ใส่รูป (incl. "make a picture of X and put it on slide 5") | `insert_image`. **Web or stock picture, the client's site:** `url` (the link must open the picture itself). **The user's Google Drive file:** `drive_file_id` (they share it with the bot from their own account, Viewer is enough). **A file on this computer, from LINE, or a picture you generated** (CLI agents): `image_upload_url` → run its `curl` → `insert_image(upload_id=...)`; a tiny one can go as `image_base64`. Put it in a placeholder box with `replace_element`, then `thumbnail`. Only use pictures the user may use. | Claude web/desktop chat can't pass on a picture pasted into the chat and can't run curl: ask the user to put it in Google Drive and share it with the bot, or give a link. Codex: its sandbox may block the network for `curl`, so the user may have to approve it. Gemini CLI / Antigravity ask before running shell commands. Never put the client's private photos on public image sites to get a link. |
 | "Update the footer" / อัปเดต footer | `read_slide` first. If the footer is a normal text box on each slide: `replace_text` with slide `"all"`. | If it sits on the layout: the deck owner changes it once by hand (Slide → Edit theme); all slides update. |
 | "Who edited this slide?" / ใครแก้สไลด์นี้ | `list_chunks` = whose slide it is; `deck_activity` = AI edits (who, when, what). | Hand edits are only in Google Slides → File → Version history (deck editors). |
 | "Rename X to Y in the whole deck" / "Change price 189 to 199" | List every place first (watch "189.-", "1,189"), ask OK, then `replace_text` with slide `"all"`. Then say which other people's slides still contain it. | Other people's slides: they change theirs. |
@@ -249,5 +261,8 @@ Rules:
 | "not registered on this server yet" | nobody has set the deck up yet | A deck owner/editor (usually Nok) asks their agent to `register_deck` it. |
 | "You have no chunk in this deck" / "Your chunk … has no slides now" / my_chunk is empty | no slides assigned (or they were taken away) | Wait for Nok to assign slides. Until then the deck is read-only. |
 | "not in your chunk" | that slide belongs to someone else or nobody | Don't retry. Ask Nok to assign it if they need it. |
+| "Cannot use Drive file … it is YOUR file" | the Drive file isn't shared with the bot, or it's someone else's file | Share it with `visrec-slides-bot@visual-record.iam.gserviceaccount.com` (Viewer) **from your own account**. Someone else's picture: they share it, or download it and use an upload. |
+| "That link opens a web page" / "not a public …" / "HTTP 403" for a picture link | the link isn't the picture itself, is private, or blocks downloads | Open the picture on its own and copy that link, or download it and use an upload (CLI) or Drive. |
+| "WebP" / "HEIC" / "SVG" / "megapixels" | wrong picture type or too big | Convert to PNG or JPEG (macOS: `sips -s format png in.webp --out out.png`), or make it smaller. |
 | Login loops, or the browser shows an error after Google sign-in ("Authorization session mismatch", "Invalid redirect URI") | stale or failed login, or the login was started in a different browser | Start the login again from the app itself and finish it in the browser that opens (don't use a login link someone sent you). If it repeats, remove the server (Claude: delete the connector; CLIs: remove the entry) and add it again. Use the same Google account Nok approved. Make sure the browser isn't blocking pop-ups. If it still fails, send Nok a screenshot of the error page. |
 | Tools don't appear after login | client hasn't reloaded | Restart the app/CLI or open a new chat. |
