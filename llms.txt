@@ -1,10 +1,16 @@
 # Visrec Slides setup
 
-> The Visrec Slides Kit is a small local command-line program (`vsk.mjs`, Node.js 18+, no dependencies) that lets a person's own AI agent read and edit a shared Google Slides deck with that person's own Google account. It needs an agent that can run shell commands on the user's computer (Claude Code or the Claude desktop app's Code tab, the Codex app or CLI, Antigravity); chat-only apps can't use it. If a user asked you to set them up, read the agent setup instructions and follow them.
+> The Visrec Slides Kit is a small local command-line program (`vsk.mjs`, Node.js 18+, no dependencies) that lets a person's own AI agent read and edit a shared Google Slides deck with that person's own Google account. It needs an agent that can run shell commands on the user's computer (Claude Code or the Claude desktop app's Code tab, the Codex app or CLI, Antigravity); chat-only apps can't use it. The kit's Google login file (`client.json`) is not published here: Nok sends it to each person privately, and the setup asks the user for it. If a user asked you to set them up, read the agent setup instructions and follow them.
 
 ## Docs
 
-- [Agent setup](https://nokkanato.github.io/visrec-slides-setup/agent-setup.md): check shell access and Node.js, download the kit, Google sign-in, remember the kit, quick test, update and remove, working rules, troubleshooting
+- [Agent setup](https://nokkanato.github.io/visrec-slides-setup/agent-setup.md): check shell access and Node.js, download the kit, put the private login file in place, Google sign-in, remember the kit, quick test, update and remove, working rules, troubleshooting
 - [Starter prompts](https://nokkanato.github.io/visrec-slides-setup/prompts.md): 30 common requests and how to handle each with kit commands
-- [Kit guide](https://nokkanato.github.io/visrec-slides-setup/kit/KIT_GUIDE.md): how to use the kit commands
 - [Human guide](https://nokkanato.github.io/visrec-slides-setup/): the same steps for people, in English and Thai
+- [Privacy](https://nokkanato.github.io/visrec-slides-setup/privacy.html): what the kit accesses and where the login is kept
+
+## Kit files
+
+- [vsk.mjs](https://nokkanato.github.io/visrec-slides-setup/kit/vsk.mjs): the kit (run `node vsk.mjs help`)
+- [KIT_GUIDE.md](https://nokkanato.github.io/visrec-slides-setup/kit/KIT_GUIDE.md): how to use the kit commands
+- [VERSION](https://nokkanato.github.io/visrec-slides-setup/kit/VERSION): the latest kit version (compare with `node vsk.mjs version`)

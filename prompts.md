@@ -6,15 +6,27 @@ These are 30 things staff often ask, in Thai and English, each with a short play
 commands. Users say them in their own words; match the meaning, not the exact text.
 
 - `vsk` means `node ~/.visrec-slides/vsk.mjs` (Windows PowerShell:
-  `node "$env:USERPROFILE\.visrec-slides\vsk.mjs"`). Every command prints JSON.
-- `--deck` takes the deck's id or its full link. Use slide and element ids from `outline` / `read`,
-  not slide numbers: numbers move when anyone adds or deletes a slide.
+  `node "$env:USERPROFILE\.visrec-slides\vsk.mjs"`). Every command prints JSON except `help`
+  (plain text). Errors are JSON `{"error", "hint"}` on stderr: show the user the `hint`.
+- `--deck` takes the deck's id or its full link. A link ending in `#slide=id.XYZ` also picks the
+  slide for `read`, `thumb` and `notes`. Use slide and element ids from `outline` / `read`, not
+  slide numbers: numbers move when anyone adds or deletes a slide.
+- `--index` (`dup`, `move-slide`) is 0-based and is the slide's final position: slide number 1 =
+  index 0. `dup` without `--index` puts the copy right after the original.
 - `place` and `image` take positions and sizes in points (pt). A standard 16:9 slide is
-  720 × 405 pt; use the deck's real size if the kit reports it.
+  720 × 405 pt; `outline` prints the deck's real `pageSize`.
+- `read` gives each element's id, kind, text and box (x, y, w, h in pt). It does **not** show
+  fonts, font sizes or colours: for those, look at a `thumb` or ask the user.
+- `text --element E` replaces all the text in one box, and the new text gets one style, so
+  formatting inside the box (a bold word, a second colour or size) is lost. `replace` keeps the
+  formatting of the text it replaces: use it when only some words change.
+- Multi-line text: real newlines in the argument, or `text --text-file f.txt` /
+  `notes --set-file f.txt`.
 - `batch --requests` takes a JSON array of Google Slides API requests (`createTable`,
   `insertText`, `updateTextStyle`, `createShape`, …). In those, give sizes as
   `{"magnitude": 120, "unit": "PT"}` and colours as 0–1 numbers (`#E63946` = red 0.902, green
-  0.224, blue 0.275). `KIT_GUIDE.md` says how `--index` counts and how to pass long JSON.
+  0.224, blue 0.275). Long JSON: save it to a file and pass `--requests @file.json` (the same
+  works for `dup --replace @file.json`).
 
 ## Rules for every request
 
@@ -38,7 +50,7 @@ commands. Users say them in their own words; match the meaning, not the exact te
 "ทำ storyboard ให้หน่อย" / "Do a storyboard for me"
 - Ask which content, how many shots, and for the script or brief.
 - `outline` → find an existing storyboard slide like it (same number of shots if possible) →
-  `dup --from <slideId> --index <right after it>`.
+  `dup --from <slideId>` (the copy lands right after it; add `--index N` for another place).
 - `read` the copy → change the title, description and shot texts with `text --element` or
   `replace --slide <newId>`.
 - Picture boxes: keep the old pictures as placeholders, or put new ones in (see 4 and 5).
@@ -64,7 +76,8 @@ commands. Users say them in their own words; match the meaning, not the exact te
 
 ### 3. Tidy the slides
 "จัดสไลด์ให้เรียบร้อย" / "Tidy my slides: line up the pictures and make the font sizes the same"
-- Ask which slides. `read` each: positions, sizes and font sizes.
+- Ask which slides. `read` each for positions and sizes. `read` doesn't show font sizes: judge
+  from a `thumb`, or ask the user which size to use.
 - Plan it: same left edges, same tops, equal gaps, same size for pictures of the same kind.
 - `place --element <id> --x --y --w --h` for each element. Keep pictures' width-to-height
   ratio (no stretching).
@@ -130,7 +143,8 @@ commands. Users say them in their own words; match the meaning, not the exact te
 ### 10. Translate
 "แปล storyboard เป็นอังกฤษ" / "Translate the storyboard to English"
 - Ask: replace the Thai, or keep both?
-- `read` → translate each box → `text --element <id> --text "…"` or `replace --slide`.
+- `read` → translate each box → `replace --slide` (keeps the formatting) or
+  `text --element <id> --text "…"` (one style for the whole box: fine for plain boxes).
 - `thumb` every slide: English fits differently from Thai.
 
 ### 11. Client feedback to a checklist
@@ -147,7 +161,9 @@ commands. Users say them in their own words; match the meaning, not the exact te
 "ย่อข้อความให้พอดีกล่อง" / "Shorten this so it fits the box"
 - `read` → rewrite shorter, keep the meaning (ask if unsure what may go) →
   `text --element <id> --text "…"` → `thumb`.
-- If the style changed after `text`, use `replace` instead; it keeps the formatting.
+- `text` gives the whole box one style. If the box mixes formatting (a bold word, two colours),
+  use `replace --find "<old sentence>" --with "<shorter one>" --slide <id>` instead: it keeps the
+  formatting.
 
 ### 14. Speaker notes
 "เขียน speaker notes สำหรับพรีเซนต์" / "Write speaker notes for my slides"
@@ -157,7 +173,8 @@ commands. Users say them in their own words; match the meaning, not the exact te
 ### 15. New slide after a section
 "ใส่ feedback วันนี้เป็นสไลด์ใหม่ต่อจาก Content 3" / "Add today's feedback as a new slide after Content 3"
 - `outline` → find the last slide of Content 3 and an existing feedback slide.
-- `dup --from <feedback slide> --index <right after Content 3>` → change the text → `thumb`.
+- `dup --from <feedback slide> --index <N>`, where N = the `index` of Content 3's last slide + 1
+  → change the text → `thumb`.
 
 ### 16. Move a schedule
 "เลื่อนตารางทั้งหมด 3 วัน" / "Move every date in my schedule 3 days later"
@@ -171,14 +188,16 @@ commands. Users say them in their own words; match the meaning, not the exact te
 ### 17. Update a calendar
 "อัปเดต calendar เดือนพฤศจิกายน" / "Update the November calendar"
 - `read` the calendar table. Change cells with `batch` (`deleteText` with
-  `"textRange": {"type": "ALL"}` then `insertText`, both with `cellLocation`), or
-  `replace --slide` when the text is unique.
+  `"textRange": {"type": "ALL"}` then `insertText`, both with `cellLocation`; leave out
+  `deleteText` for an empty cell, it fails there), or `replace --slide` when the text is unique.
 - `thumb`.
 
 ### 18. Check before sending
 "เช็กทั้ง deck ก่อนส่งลูกค้า" / "Check all my slides before we send them to the client, and show me a picture of each"
-- Ask which slides if the deck is big. `check --deck D` lists problems (text that doesn't fit,
-  things off the slide, empty boxes).
+- Ask which slides if the deck is big. `check --deck D` lists elements off or partly off the
+  slide and empty slides; add `--expect '["Content 10", "Nov 2026"]'` to report text that should
+  be in the deck but isn't. It exits with code 1 when it finds something; that is its answer.
+  It can't see text that overflows its box: the pictures show that.
 - `thumbs --deck D --out <folder>` and look at each picture. Judge by the picture: a big text box
   or a picture placed half off the slide is sometimes on purpose.
 - Report a short list per slide. Fix only after OK.
@@ -213,8 +232,8 @@ commands. Users say them in their own words; match the meaning, not the exact te
 
 ### 24. Brand colours
 "เปลี่ยนสีหัวข้อเป็นสีแบรนด์" / "Make the headings the brand colour"
-- Find the colours: `read` the brand colour slide (shape fill colours, if the kit shows them), or
-  `thumb` it and ask the user for the colour codes.
+- Find the colours: `read` doesn't show colours, so `thumb` the brand colour slide and read the
+  codes from the picture if they are written there, or ask the user for the colour codes.
 - On the slides the user names: `batch` `updateTextStyle` on the heading boxes with
   `"style": {"foregroundColor": {"opaqueColor": {"rgbColor": {...}}}}`, `"fields": "foregroundColor"`.
 - `thumb`.

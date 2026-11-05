@@ -4,13 +4,15 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Visrec Slides privacy</title>
-<meta name="description" content="Privacy policy for the Visrec Slides connector. นโยบายความเป็นส่วนตัวของ Visrec Slides">
+<meta name="description" content="Privacy policy for the Visrec Slides Kit. นโยบายความเป็นส่วนตัวของ Visrec Slides Kit">
 <style>
   :root {
-    --bg: #ffffff; --text: #1f2328; --muted: #59636e; --link: #0b57d0; --border: #d0d7de;
+    --bg: #ffffff; --text: #1f2328; --muted: #59636e; --link: #0b57d0;
+    --code-bg: #f3f4f6; --border: #d0d7de;
   }
   @media (prefers-color-scheme: dark) {
-    :root { --bg: #0d1117; --text: #e6edf3; --muted: #9198a1; --link: #6cb6ff; --border: #30363d; }
+    :root { --bg: #0d1117; --text: #e6edf3; --muted: #9198a1; --link: #6cb6ff;
+            --code-bg: #161b22; --border: #30363d; }
   }
   * { box-sizing: border-box; }
   html { -webkit-text-size-adjust: 100%; }
@@ -22,58 +24,90 @@
   h1 { font-size: 1.6rem; line-height: 1.3; margin: 0 0 8px; }
   h2 { font-size: 1.2rem; margin: 32px 0 8px; padding-top: 16px; border-top: 1px solid var(--border); }
   p, ul { margin: 8px 0; }
+  li { margin: 6px 0; }
   .th { color: var(--muted); }
   .thh { display: block; font-size: 1rem; font-weight: 600; color: var(--muted); }
   a { color: var(--link); }
+  code { background: var(--code-bg); padding: 1px 5px; border-radius: 4px; font-size: 0.9em;
+         font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; word-break: break-all; }
   footer { margin-top: 40px; font-size: 0.9rem; color: var(--muted); }
 </style>
 </head>
 <body>
 <main>
   <h1>Visrec Slides: privacy policy</h1>
-  <p>Visrec Slides is a tool made by Visrec Co., Ltd. for its own team and the freelancers it works
-     with. It lets each person's AI agent edit their assigned slides in a shared Google Slides deck.
-     Last updated: 5 November 2026.</p>
-  <p lang="th" class="th">Visrec Slides เป็นเครื่องมือของบริษัท Visrec สำหรับทีมงานและฟรีแลนซ์ที่ทำงานกับบริษัท
-     ให้ AI ของแต่ละคนแก้สไลด์ที่ได้รับมอบหมายในไฟล์ Google Slides ที่ใช้ร่วมกัน</p>
+  <p>The Visrec Slides Kit is a small program made by Visrec Co., Ltd. for its team and the people
+     it works with. It runs on your own computer and lets your AI agent read and edit Google Slides
+     decks with your own Google account. Last updated: 5 November 2026.</p>
+  <p lang="th" class="th">Visrec Slides Kit เป็นโปรแกรมเล็กๆ ของบริษัท Visrec สำหรับทีมงานและคนที่ทำงานกับบริษัท
+     ทำงานบนคอมพิวเตอร์ของคุณเอง ให้ AI ของคุณอ่านและแก้ไฟล์ Google Slides ด้วยบัญชี Google ของคุณเอง</p>
 
-  <h2>What we receive from Google <span lang="th" class="thh">ข้อมูลที่ได้รับจาก Google</span></h2>
-  <p>When you sign in with Google we ask only for your email address and basic sign-in
-     information (the <code>openid</code> and <code>email</code> permissions). We do not get your
-     password, your Google Drive, your Gmail or any other Google data.</p>
-  <p lang="th" class="th">เมื่อคุณล็อกอินด้วย Google เราขอเฉพาะอีเมลและข้อมูลการล็อกอินพื้นฐานเท่านั้น
-     เราไม่ได้รับรหัสผ่าน ไฟล์ใน Google Drive อีเมล หรือข้อมูล Google อื่นของคุณ</p>
+  <h2>Who gets your data <span lang="th" class="thh">ใครได้รับข้อมูลของคุณ</span></h2>
+  <p>The kit talks only to Google (Google sign-in, the Google Slides API and the Google Drive API),
+     with your own login. Visrec runs no server for the kit and receives and stores nothing: not
+     your email, not your login, not your slides.</p>
+  <p lang="th" class="th">Kit ติดต่อกับ Google เท่านั้น (การล็อกอิน Google, Google Slides API และ Google Drive API)
+     ด้วยการล็อกอินของคุณเอง Visrec ไม่มีเซิร์ฟเวอร์สำหรับ kit นี้ และไม่ได้รับหรือเก็บข้อมูลใดๆ
+     ทั้งอีเมล ข้อมูลล็อกอิน และสไลด์ของคุณ</p>
+  <p>Your AI app sees what the kit shows it (slide text and slide pictures). That is covered by your
+     AI app’s own privacy terms.</p>
+  <p lang="th" class="th">แอป AI ของคุณจะเห็นสิ่งที่ kit แสดงให้ (ข้อความและภาพสไลด์) ซึ่งอยู่ภายใต้นโยบายความเป็นส่วนตัวของแอป AI นั้นเอง</p>
 
-  <h2>How we use it <span lang="th" class="thh">เราใช้ข้อมูลอย่างไร</span></h2>
+  <h2>What the kit may access <span lang="th" class="thh">kit เข้าถึงอะไรได้บ้าง</span></h2>
+  <p>When you sign in, Google asks you to allow these permissions:</p>
   <ul>
-    <li>To check that you are on Visrec's list of people who may use the tool.</li>
-    <li>To know which slides are yours to edit.</li>
-    <li>To keep a record of each change: your email, the deck, what was changed and when.</li>
+    <li><b>Your email address</b> (<code>openid</code>, <code>email</code>): to show which Google
+        account you signed in with.</li>
+    <li><b>Google Slides</b> (<code>presentations</code>): to read and edit the decks your account can
+        open. The kit opens only the decks your AI asks it to.</li>
+    <li><b>Google Drive, only the files this app uses</b> (<code>drive.file</code>): only to add a
+        picture from your computer. The kit briefly uploads it to your Drive as a temporary file,
+        takes the picture from it, then moves that temporary file to the trash. It cannot see your
+        other Drive files.</li>
   </ul>
-  <p lang="th" class="th">ใช้ตรวจว่าคุณอยู่ในรายชื่อที่ใช้เครื่องมือได้ ใช้ระบุว่าสไลด์ไหนเป็นของคุณ
-     และใช้บันทึกการแก้ไขแต่ละครั้ง (อีเมล ไฟล์ สิ่งที่แก้ และเวลา)</p>
-  <p>Slide edits are made by Visrec's own Google service account, only in decks that were shared
-     with it. Anyone the deck is shared with can see its recent change records (who changed
-     which slides, when, and what was asked for).</p>
-  <p lang="th" class="th">ทุกคนที่ได้รับแชร์ไฟล์นั้นจะเห็นบันทึกการแก้ไขล่าสุดของไฟล์ได้ (ใครแก้สไลด์ไหน เมื่อไร และขอให้แก้อะไร)</p>
+  <p>The kit never gets your password, your Gmail, your other Drive files or any other Google data.</p>
+  <p lang="th" class="th">ตอนล็อกอิน Google จะขออนุญาต: <b>อีเมลของคุณ</b> เพื่อแสดงว่าล็อกอินด้วยบัญชีไหน,
+     <b>Google Slides</b> เพื่ออ่านและแก้ไฟล์สไลด์ที่บัญชีของคุณเปิดได้ (kit เปิดเฉพาะไฟล์ที่ AI สั่งเท่านั้น)
+     และ <b>Google Drive เฉพาะไฟล์ที่แอปนี้ใช้</b> เพื่อใส่รูปจากเครื่องของคุณเท่านั้น โดย kit จะอัปโหลดรูปเป็นไฟล์ชั่วคราว
+     ใน Drive ของคุณ ดึงรูปไปใช้ แล้วย้ายไฟล์ชั่วคราวนั้นไปถังขยะทันที kit มองไม่เห็นไฟล์อื่นใน Drive ของคุณ
+     และไม่ได้รับรหัสผ่าน อีเมล Gmail หรือข้อมูล Google อื่นของคุณ</p>
 
-  <h2>Where it is kept <span lang="th" class="thh">เก็บข้อมูลไว้ที่ไหน</span></h2>
-  <p>In Visrec's Google Cloud project (Firestore, Singapore region). Sign-in sessions are stored
-     encrypted. Change records are kept while Visrec needs them for its projects.</p>
-  <p lang="th" class="th">เก็บใน Google Cloud ของ Visrec (ภูมิภาคสิงคโปร์) ข้อมูลการล็อกอินถูกเข้ารหัส</p>
+  <h2>Where your login is kept <span lang="th" class="thh">ข้อมูลล็อกอินเก็บไว้ที่ไหน</span></h2>
+  <p>Only on your computer, in <code>~/.visrec-slides/token.json</code> (in your home folder, readable
+     only by your user account on Mac and Linux). It is sent nowhere except to Google. Slide pictures
+     the kit makes are saved in a temporary folder on your computer.</p>
+  <p lang="th" class="th">เก็บไว้ในเครื่องของคุณเท่านั้น ที่ <code>~/.visrec-slides/token.json</code>
+     (ในโฟลเดอร์ผู้ใช้ของคุณ) และไม่ส่งไปที่ไหนนอกจาก Google ภาพสไลด์ที่ kit สร้างจะเก็บในโฟลเดอร์ชั่วคราวในเครื่องของคุณ</p>
+
+  <h2>Your edits <span lang="th" class="thh">การแก้ไขของคุณ</span></h2>
+  <p>Changes made through the kit are saved under your own name in the deck’s version history
+     (File → Version history), just like edits you make by hand. Other people who can edit the
+     deck can see that history.</p>
+  <p lang="th" class="th">การแก้ไขผ่าน kit จะขึ้นเป็นชื่อของคุณในประวัติเวอร์ชันของไฟล์ (File → Version history)
+     เหมือนตอนที่คุณแก้เอง คนอื่นที่แก้ไฟล์นั้นได้ก็เห็นประวัตินี้</p>
 
   <h2>Sharing <span lang="th" class="thh">การเปิดเผยข้อมูล</span></h2>
-  <p>We do not sell your data, use it for ads, or share it with anyone outside Visrec, except
-     Google, which hosts the service. Visrec Slides' use of information received from Google APIs
-     adheres to the
+  <p>Visrec receives no data from the kit, so it has nothing to sell, use for ads or pass on. The
+     kit’s use of information received from Google APIs adheres to the
      <a href="https://developers.google.com/terms/api-services-user-data-policy">Google API Services
      User Data Policy</a>, including the Limited Use requirements.</p>
-  <p lang="th" class="th">เราไม่ขายข้อมูล ไม่ใช้ทำโฆษณา และไม่ส่งต่อให้ใครนอก Visrec</p>
+  <p lang="th" class="th">Visrec ไม่ได้รับข้อมูลใดๆ จาก kit จึงไม่มีข้อมูลที่จะขาย ใช้ทำโฆษณา หรือส่งต่อให้ใคร</p>
 
-  <h2>Questions or deletion <span lang="th" class="thh">สอบถามหรือขอลบข้อมูล</span></h2>
-  <p>Contact Visrec at <a href="https://visrec.studio/contact">visrec.studio/contact</a> to ask
-     what we hold about you or to have it deleted.</p>
-  <p lang="th" class="th">ติดต่อ Visrec ที่ visrec.studio/contact เพื่อสอบถามหรือขอลบข้อมูลของคุณ</p>
+  <h2>Remove access <span lang="th" class="thh">ยกเลิกการเข้าถึง</span></h2>
+  <ul>
+    <li>Run <code>node ~/.visrec-slides/vsk.mjs logout</code> (or ask your AI to sign you out). It
+        cancels the login at Google and deletes <code>token.json</code>. Then delete the
+        <code>.visrec-slides</code> folder.</li>
+    <li>Or at any time: <a href="https://myaccount.google.com/connections">myaccount.google.com</a>
+        → Security → Third-party apps, and remove the kit’s access.</li>
+  </ul>
+  <p lang="th" class="th">สั่ง <code>node ~/.visrec-slides/vsk.mjs logout</code> (หรือบอก AI ให้ออกจากระบบ)
+     ซึ่งจะยกเลิกการล็อกอินที่ Google และลบ <code>token.json</code> แล้วลบโฟลเดอร์ <code>.visrec-slides</code>
+     หรือเข้าไปที่ myaccount.google.com → ความปลอดภัย (Security) → แอปของบุคคลที่สาม แล้วยกเลิกสิทธิ์ของ kit ได้ทุกเมื่อ</p>
+
+  <h2>Questions <span lang="th" class="thh">สอบถาม</span></h2>
+  <p>Contact Visrec at <a href="https://visrec.studio/contact">visrec.studio/contact</a>.</p>
+  <p lang="th" class="th">ติดต่อ Visrec ที่ visrec.studio/contact</p>
 
   <footer>
     <p><a href="./">Visrec Slides setup</a></p>

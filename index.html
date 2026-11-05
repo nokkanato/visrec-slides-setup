@@ -68,14 +68,24 @@
   <h2>1. Ask for access to the deck <span lang="th" class="thh">ขอสิทธิ์แก้ไขสไลด์จากเจ้าของไฟล์</span></h2>
   <p>Ask the deck owner to share the deck with your Google account as <b>Editor</b> (in Google
      Slides: <b>Share</b> → add your email → <b>Editor</b>). Use the account you will sign in with
-     in step 3: a company email or a personal Gmail both work. With Viewer or Commenter access your
+     in step 4: a company email or a personal Gmail both work. With Viewer or Commenter access your
      AI can read the deck but not change it.</p>
   <p lang="th" class="th">ขอให้เจ้าของไฟล์แชร์สไลด์ให้บัญชี Google ของคุณเป็น <b>ผู้แก้ไข (Editor)</b>
-     (ใน Google Slides: กด <b>Share</b> → ใส่อีเมลของคุณ → <b>Editor</b>) ใช้บัญชีเดียวกับที่จะล็อกอินในขั้นที่ 3
+     (ใน Google Slides: กด <b>Share</b> → ใส่อีเมลของคุณ → <b>Editor</b>) ใช้บัญชีเดียวกับที่จะล็อกอินในขั้นที่ 4
      อีเมลบริษัทหรือ Gmail ส่วนตัวก็ได้ ถ้าได้สิทธิ์แค่ดู (Viewer) หรือแสดงความคิดเห็น (Commenter)
      AI จะอ่านสไลด์ได้แต่แก้ไม่ได้</p>
 
-  <h2>2. Paste one line into your AI app <span lang="th" class="thh">วางข้อความนี้ในแอป AI</span></h2>
+  <h2>2. Get the login file from Nok <span lang="th" class="thh">ขอไฟล์ล็อกอินจาก Nok</span></h2>
+  <p>Ask Nok for <b>the Visrec Slides login file</b>. Nok sends it to you privately, for example in
+     LINE: a small file called <code>client.json</code>. Save it on your computer (the Downloads
+     folder is fine). Your AI asks for it during setup: drag the file into the chat, or say where
+     it is. Don’t post it anywhere, don’t forward it, and don’t copy its text into a chat.</p>
+  <p lang="th" class="th">ขอ <b>ไฟล์ล็อกอิน Visrec Slides</b> จาก Nok ซึ่งจะส่งให้คุณเป็นการส่วนตัว เช่น ทาง LINE
+     เป็นไฟล์เล็กๆ ชื่อ <code>client.json</code> บันทึกไว้ในเครื่อง (ในโฟลเดอร์ Downloads ก็ได้)
+     ระหว่างตั้งค่า AI จะขอไฟล์นี้ ให้ลากไฟล์ไปวางในแชต หรือบอกว่าไฟล์อยู่ที่ไหน
+     อย่าโพสต์หรือส่งต่อไฟล์นี้ให้ใคร และอย่าคัดลอกข้อความในไฟล์ไปวางในแชต</p>
+
+  <h2>3. Paste one line into your AI app <span lang="th" class="thh">วางข้อความนี้ในแอป AI</span></h2>
   <p>Open one of the apps above on your computer and send it this message. In the Claude app,
      choose the <b>Code</b> tab first; if it asks for a folder, any folder is fine (for example
      Documents).</p>
@@ -86,13 +96,14 @@
     <button type="button" id="copybtn" aria-label="Copy the message">Copy</button>
   </div>
   <p>The AI installs a small program, the <b>Visrec Slides Kit</b>, in a folder called
-     <code>.visrec-slides</code> in your home folder. If your computer doesn’t have Node.js yet
-     (free, needed to run the kit), the AI installs it or shows you how.</p>
+     <code>.visrec-slides</code> in your home folder, and asks you for the login file from step 2.
+     If your computer doesn’t have Node.js yet (free, needed to run the kit), the AI installs it or
+     shows you how.</p>
   <p lang="th" class="th">AI จะติดตั้งโปรแกรมเล็กๆ ชื่อ <b>Visrec Slides Kit</b> ไว้ในโฟลเดอร์
-     <code>.visrec-slides</code> ในโฟลเดอร์ผู้ใช้ของคุณ ถ้าเครื่องยังไม่มี Node.js (ฟรี ต้องใช้เพื่อรันโปรแกรมนี้)
+     <code>.visrec-slides</code> ในโฟลเดอร์ผู้ใช้ของคุณ และขอไฟล์ล็อกอินจากขั้นที่ 2 ถ้าเครื่องยังไม่มี Node.js (ฟรี ต้องใช้เพื่อรันโปรแกรมนี้)
      AI จะติดตั้งให้หรือบอกวิธี</p>
 
-  <h2>3. Approve, then sign in with Google <span lang="th" class="thh">กดอนุญาต แล้วล็อกอินด้วย Google</span></h2>
+  <h2>4. Approve, then sign in with Google <span lang="th" class="thh">กดอนุญาต แล้วล็อกอินด้วย Google</span></h2>
   <p>While it sets up, your AI app asks before it runs a command, downloads files or saves outside
      its folder. Click <b>Allow</b> (or Approve / Yes). If Node.js has to be installed, your
      computer may ask for your password.</p>
@@ -106,16 +117,19 @@
         Click <b>Advanced</b>, then <b>Go to … (unsafe)</b>.<br>
         <span lang="th" class="th">Google จะขึ้นว่า <b>“Google hasn’t verified this app”</b> เป็นเรื่องปกติของเครื่องมือภายในบริษัทนี้
         ให้กด <b>Advanced</b> แล้วกด <b>Go to … (unsafe)</b></span></li>
-    <li>Tick the box that allows Google Slides, then click <b>Continue</b>.<br>
-        <span lang="th" class="th">ติ๊กช่องที่อนุญาตให้ใช้ Google Slides แล้วกด <b>Continue</b></span></li>
-    <li>Go back to your AI app. It tells you which account you are signed in with and asks for a
-        deck link to test.<br>
-        <span lang="th" class="th">กลับไปที่แอป AI จะบอกว่าคุณล็อกอินด้วยบัญชีไหน และขอลิงก์สไลด์เพื่อทดสอบ</span></li>
+    <li>Google asks to let the kit use Google Slides and the Google Drive files it uses. Tick
+        <b>every box</b> (or <b>Select all</b>), then click <b>Continue</b>.<br>
+        <span lang="th" class="th">Google จะขออนุญาตให้ใช้ Google Slides และไฟล์ใน Google Drive ที่แอปนี้ใช้
+        ให้<b>ติ๊กทุกช่อง</b> (หรือ <b>Select all</b>) แล้วกด <b>Continue</b></span></li>
+    <li>When the browser says <b>“Signed in. You can close this tab”</b>, go back to your AI app.
+        It tells you which account you are signed in with and asks for a deck link to test.<br>
+        <span lang="th" class="th">เมื่อเบราว์เซอร์ขึ้นว่า <b>“Signed in. You can close this tab”</b> ให้กลับไปที่แอป AI
+        แล้ว AI จะบอกว่าคุณล็อกอินด้วยบัญชีไหน และขอลิงก์สไลด์เพื่อทดสอบ</span></li>
   </ol>
   <p>Only sign in when your own AI app opened the page. Never use a sign-in link someone sends you.</p>
   <p lang="th" class="th">ล็อกอินเฉพาะตอนที่แอป AI ของคุณเปิดหน้านั้นขึ้นมาเอง อย่ากดลิงก์ล็อกอินที่คนอื่นส่งมาให้</p>
 
-  <h2>4. Ask for what you need <span lang="th" class="thh">สั่งงานได้เลย</span></h2>
+  <h2>5. Ask for what you need <span lang="th" class="thh">สั่งงานได้เลย</span></h2>
   <p>Talk to your AI normally, in English or Thai. Some examples:</p>
   <p lang="th" class="th">คุยกับ AI ได้ตามปกติ เป็นภาษาไทยหรืออังกฤษก็ได้ ตัวอย่าง:</p>
   <ul class="examples">
@@ -173,39 +187,50 @@
     <li>Your AI app may ask before each kit command. You can choose the option that stops it asking
         again for the kit.<br>
         <span lang="th" class="th">แอป AI อาจถามทุกครั้งก่อนรันคำสั่งของ kit เลือกตัวเลือกที่ให้ไม่ต้องถามอีกสำหรับ kit นี้ได้</span></li>
-    <li>Your Google sign-in is saved on your computer, in the <code>.visrec-slides</code> folder.
-        Don’t share that folder.<br>
-        <span lang="th" class="th">ข้อมูลล็อกอิน Google ของคุณเก็บไว้ในเครื่องของคุณ ในโฟลเดอร์ <code>.visrec-slides</code> อย่าส่งโฟลเดอร์นี้ให้ใคร</span></li>
-    <li>To update the kit, send your AI: <code>Read https://nokkanato.github.io/visrec-slides-setup/agent-setup.md and update my Visrec Slides Kit</code><br>
-        <span lang="th" class="th">ถ้าจะอัปเดต kit ให้ส่งข้อความข้างบนให้ AI</span></li>
+    <li>Your Google sign-in and the login file are saved only on your computer, in the
+        <code>.visrec-slides</code> folder. Don’t share that folder. Visrec runs no server for this
+        and stores nothing about you (<a href="privacy.html">privacy</a>).<br>
+        <span lang="th" class="th">ข้อมูลล็อกอิน Google ของคุณและไฟล์ล็อกอินเก็บไว้ในเครื่องของคุณเท่านั้น ในโฟลเดอร์
+        <code>.visrec-slides</code> อย่าส่งโฟลเดอร์นี้ให้ใคร Visrec ไม่มีเซิร์ฟเวอร์สำหรับเรื่องนี้และไม่เก็บข้อมูลของคุณ</span></li>
+    <li>To update the kit, send your AI: <code>Read https://nokkanato.github.io/visrec-slides-setup/agent-setup.md and update my Visrec Slides Kit</code>.
+        You stay signed in and don’t need the login file again.<br>
+        <span lang="th" class="th">ถ้าจะอัปเดต kit ให้ส่งข้อความข้างบนให้ AI ไม่ต้องล็อกอินใหม่ และไม่ต้องใช้ไฟล์ล็อกอินอีก</span></li>
   </ul>
 
   <h2>Remove it <span lang="th" class="thh">เลิกใช้</span></h2>
   <p>Send your AI: <code>Read https://nokkanato.github.io/visrec-slides-setup/agent-setup.md and remove the Visrec Slides Kit</code>.
-     It signs you out and deletes the kit folder and its note. You can also remove the kit’s access
+     It signs you out and deletes the kit folder (with the login file) and its note. You can also remove the kit’s access
      in your Google account at <a href="https://myaccount.google.com/connections">myaccount.google.com/connections</a>.</p>
-  <p lang="th" class="th">ส่งข้อความข้างบนให้ AI แล้ว AI จะออกจากระบบ ลบโฟลเดอร์ของ kit และบันทึกที่เกี่ยวข้อง
+  <p lang="th" class="th">ส่งข้อความข้างบนให้ AI แล้ว AI จะออกจากระบบ ลบโฟลเดอร์ของ kit (รวมไฟล์ล็อกอิน) และบันทึกที่เกี่ยวข้อง
      และคุณยกเลิกสิทธิ์ของ kit ในบัญชี Google ได้ที่ <a href="https://myaccount.google.com/connections">myaccount.google.com/connections</a></p>
 
   <h2>For deck owners <span lang="th" class="thh">สำหรับเจ้าของไฟล์</span></h2>
-  <p>Share the deck with each person’s Google account as <b>Editor</b>. That’s all. To stop someone,
-     remove them in <b>Share</b>.</p>
-  <p lang="th" class="th">แชร์สไลด์ให้บัญชี Google ของแต่ละคนเป็น <b>ผู้แก้ไข (Editor)</b> แค่นั้นพอ
-     ถ้าจะหยุดให้ใครใช้ ก็เอาชื่อออกใน <b>Share</b></p>
+  <p>Share the deck with each person’s Google account as <b>Editor</b>. Each person also needs the
+     login file, which Nok sends privately (it is not on this page). To stop someone, remove them
+     in <b>Share</b>.</p>
+  <p lang="th" class="th">แชร์สไลด์ให้บัญชี Google ของแต่ละคนเป็น <b>ผู้แก้ไข (Editor)</b> และแต่ละคนต้องมีไฟล์ล็อกอิน
+     ซึ่ง Nok ส่งให้เป็นการส่วนตัว (ไม่มีในหน้านี้) ถ้าจะหยุดให้ใครใช้ ก็เอาชื่อออกใน <b>Share</b></p>
 
   <h2>If something goes wrong <span lang="th" class="thh">ถ้ามีปัญหา</span></h2>
   <table>
     <thead><tr><th>What you see / สิ่งที่เห็น</th><th>What to do / วิธีแก้</th></tr></thead>
     <tbody>
       <tr><td>“Google hasn’t verified this app”</td>
-          <td>Expected. Click <b>Advanced</b> → <b>Go to … (unsafe)</b> → tick the Slides box → <b>Continue</b>.<br>
-              <span lang="th" class="th">เป็นเรื่องปกติ กด <b>Advanced</b> → <b>Go to … (unsafe)</b> → ติ๊กช่อง Slides → <b>Continue</b></span></td></tr>
+          <td>Expected. Click <b>Advanced</b> → <b>Go to … (unsafe)</b> → tick every box → <b>Continue</b>.<br>
+              <span lang="th" class="th">เป็นเรื่องปกติ กด <b>Advanced</b> → <b>Go to … (unsafe)</b> → ติ๊กทุกช่อง → <b>Continue</b></span></td></tr>
+      <tr><td>The AI asks for the login file, or says client.json is missing</td>
+          <td>Ask Nok for <b>the Visrec Slides login file</b>, save it (Downloads is fine), then drag it
+              into the chat or tell the AI where it is.<br>
+              <span lang="th" class="th">ขอ <b>ไฟล์ล็อกอิน Visrec Slides</b> จาก Nok บันทึกไว้ (ใน Downloads ก็ได้)
+              แล้วลากไฟล์ไปวางในแชต หรือบอก AI ว่าไฟล์อยู่ที่ไหน</span></td></tr>
       <tr><td>“Access blocked” / “This app is blocked”</td>
           <td>Your company’s Google admin doesn’t allow outside apps for that account. Use another Google
               account (for example a personal Gmail) and ask the deck owner to share the deck with it,
-              or ask your IT admin.<br>
+              or ask your IT admin. If it says the app “has not completed the Google verification
+              process”, tell Nok.<br>
               <span lang="th" class="th">ผู้ดูแลระบบ Google ของบริษัทไม่อนุญาตแอปภายนอกสำหรับบัญชีนั้น ให้ใช้บัญชี Google อื่น
-              (เช่น Gmail ส่วนตัว) แล้วขอให้เจ้าของไฟล์แชร์สไลด์ให้บัญชีนั้น หรือถามฝ่าย IT ของบริษัท</span></td></tr>
+              (เช่น Gmail ส่วนตัว) แล้วขอให้เจ้าของไฟล์แชร์สไลด์ให้บัญชีนั้น หรือถามฝ่าย IT ของบริษัท
+              ถ้าขึ้นว่าแอป “has not completed the Google verification process” ให้แจ้ง Nok</span></td></tr>
       <tr><td>The AI says it can’t run commands or install anything</td>
           <td>You are in a chat-only app. Open the Claude app’s <b>Code</b> tab, Codex or Antigravity
               and paste the line again.<br>
@@ -228,6 +253,7 @@
 
   <footer>
     <p>For AI agents: <a href="agent-setup.md">agent-setup.md</a> · <a href="prompts.md">prompts.md</a> · <a href="llms.txt">llms.txt</a></p>
+    <p>Kit files: <a href="kit/vsk.mjs">vsk.mjs</a> · <a href="kit/KIT_GUIDE.md">KIT_GUIDE.md</a> · <a href="kit/VERSION">VERSION</a></p>
     <p><a href="privacy.html">Privacy policy</a></p>
   </footer>
 </main>
