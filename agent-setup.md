@@ -61,9 +61,10 @@ accounts on 2026-06-18 (per geminicli.com). Paid / Workspace Gemini CLI users ca
 
 You can't change these settings yourself. Walk the user through it, one step at a time:
 
-1. Open **Settings → Connectors** (on claude.ai or in the Claude desktop app). On mobile, set it
-   up once on the web or desktop app first; it then works on mobile too.
-2. Click **Add custom connector**.
+1. Open **Settings → Customize → Connectors** (on claude.ai or in the Claude desktop app; older
+   versions had it under Settings → Connectors). On mobile, set it up once on the web or desktop
+   app first; it then works on mobile too.
+2. Click **+ Add** (top right) → **Add custom connector**.
    - Name: `Visrec Slides`
    - URL: `https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp`
    - Leave the advanced / OAuth Client ID fields **empty**. If Claude shows choices for
@@ -71,7 +72,7 @@ You can't change these settings yourself. Walk the user through it, one step at 
      published identity**).
    - If it says **"Couldn't check the server"**, the server was asleep: wait 15 seconds, cancel
      and add it again.
-3. Click **Add**, then **Connect**. A page "Application Access Request" opens first: check that
+3. Click **Continue** (older versions: **Add**, then **Connect**). A page "Application Access Request" opens first: check that
    the callback address starts with `https://claude.ai/` (or `https://claude.com/`), then click
    **Allow Access**. Then sign in with Google using the email Nok added.
 4. In a chat, make sure the **Visrec Slides** connector is turned on (the tools / "+" menu in the
