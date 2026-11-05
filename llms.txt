@@ -1,10 +1,10 @@
 # Visrec Slides setup
 
-> Visrec Slides is a remote MCP server for editing one shared Google Slides deck with several people at once; each person's AI agent may change only that person's assigned slides. If a user asked you to set them up, read the agent setup instructions and follow them.
-
-MCP server URL: https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp (OAuth, sign in with Google)
+> The Visrec Slides Kit is a small local command-line program (`vsk.mjs`, Node.js 18+, no dependencies) that lets a person's own AI agent read and edit a shared Google Slides deck with that person's own Google account. It needs an agent that can run shell commands on the user's computer (Claude Code or the Claude desktop app's Code tab, the Codex app or CLI, Antigravity); chat-only apps can't use it. If a user asked you to set them up, read the agent setup instructions and follow them.
 
 ## Docs
 
-- [Agent setup](https://nokkanato.github.io/visrec-slides-setup/agent-setup.md): which client you are in, exact config and login steps for Claude Code, Claude web/desktop, Codex CLI, Gemini CLI and Antigravity, how to verify, working rules, troubleshooting
+- [Agent setup](https://nokkanato.github.io/visrec-slides-setup/agent-setup.md): check shell access and Node.js, download the kit, Google sign-in, remember the kit, quick test, update and remove, working rules, troubleshooting
+- [Starter prompts](https://nokkanato.github.io/visrec-slides-setup/prompts.md): 30 common requests and how to handle each with kit commands
+- [Kit guide](https://nokkanato.github.io/visrec-slides-setup/kit/KIT_GUIDE.md): how to use the kit commands
 - [Human guide](https://nokkanato.github.io/visrec-slides-setup/): the same steps for people, in English and Thai

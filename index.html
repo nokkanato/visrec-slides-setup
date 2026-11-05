@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Visrec Slides setup</title>
-<meta name="description" content="Set up your AI agent to work on your slides in a shared Visrec Google Slides deck. วิธีตั้งค่า AI ให้ทำงานกับสไลด์ของคุณ">
+<meta name="description" content="Set up your own AI (Claude, Codex or Antigravity) to work on a shared Visrec Google Slides deck with your own Google account. วิธีตั้งค่า AI ของคุณให้ทำงานกับสไลด์ Visrec">
 <link rel="alternate" type="text/markdown" href="agent-setup.md" title="Setup instructions for AI agents">
 <style>
   :root {
@@ -46,108 +46,188 @@
 <body>
 <main>
   <h1>Visrec Slides: set up your AI</h1>
-  <p>Several people work on one Google Slides deck at the same time. Each person uses their own
-     AI (Claude, Codex, Gemini or Antigravity) and changes only their own slides.</p>
-  <p lang="th" class="th">หลายคนทำงานในไฟล์ Google Slides เดียวกันได้พร้อมกัน แต่ละคนใช้ AI ของตัวเอง
-     (Claude, Codex, Gemini หรือ Antigravity) และแก้ได้เฉพาะสไลด์ของตัวเอง</p>
+  <p>Your own AI can work on a shared Google Slides deck for you: make storyboards, tidy the
+     layout, put pictures in and more. It signs in with your own Google account, so its changes
+     show under your name in the deck’s version history, just like when you edit by hand.</p>
+  <p lang="th" class="th">ให้ AI ของคุณเองช่วยทำงานในไฟล์ Google Slides ที่ใช้ร่วมกัน เช่น ทำ storyboard
+     จัดหน้าสไลด์ ใส่รูป และอื่นๆ AI จะล็อกอินด้วยบัญชี Google ของคุณเอง การแก้ไขจึงขึ้นเป็นชื่อคุณ
+     ในประวัติเวอร์ชันของไฟล์ เหมือนตอนที่คุณแก้เอง</p>
 
-  <h2>1. Ask Nok to add you to the Visrec system <span lang="th" class="thh">ขอให้ Nok เพิ่มคุณเข้าระบบ Visrec</span></h2>
-  <p>Visrec Slides is only for people Nok has added to the Visrec system. Send Nok the email of the
-     Google account you will sign in with (a company email or a personal Gmail both work) and wait
-     until Nok confirms you are added. If you are not in the Visrec system, edit the deck by hand
-     in Google Slides instead.</p>
-  <p lang="th" class="th">Visrec Slides ใช้ได้เฉพาะคนที่ Nok เพิ่มเข้าระบบ Visrec แล้วเท่านั้น ส่งอีเมลบัญชี Google
-     ที่คุณจะใช้ล็อกอินให้ Nok (อีเมลบริษัทหรือ Gmail ส่วนตัวก็ได้) แล้วรอ Nok ยืนยันว่าเพิ่มแล้ว
-     ถ้าคุณไม่ได้อยู่ในระบบ Visrec ให้แก้สไลด์ด้วยมือใน Google Slides ตามปกติ</p>
+  <h2>Which AI apps work <span lang="th" class="thh">ใช้กับแอป AI ไหนได้</span></h2>
+  <ul>
+    <li><b>Works:</b> the Claude desktop app (<b>Code</b> tab) or Claude Code, <b>Codex</b> (app or CLI),
+        <b>Antigravity</b>. On a Mac or Windows computer.<br>
+        <span lang="th" class="th"><b>ใช้ได้:</b> แอป Claude บนคอมพิวเตอร์ (แท็บ <b>Code</b>) หรือ Claude Code,
+        <b>Codex</b> (แอปหรือ CLI), <b>Antigravity</b> บน Mac หรือ Windows</span></li>
+    <li><b>Doesn’t work:</b> AI chat in a web browser or on a phone (claude.ai, the Claude phone app,
+        ChatGPT, Gemini). They can’t run programs on your computer.<br>
+        <span lang="th" class="th"><b>ใช้ไม่ได้:</b> AI แบบแชตในเว็บเบราว์เซอร์หรือในมือถือ (claude.ai, แอป Claude
+        ในมือถือ, ChatGPT, Gemini) เพราะรันโปรแกรมบนเครื่องของคุณไม่ได้</span></li>
+  </ul>
 
-  <h2>2. Paste one line into your AI <span lang="th" class="thh">วางข้อความนี้ใน AI ของคุณ</span></h2>
-  <p>Open your AI tool and send it this message:</p>
-  <p lang="th" class="th">เปิดแอป AI ของคุณ แล้วส่งข้อความนี้:</p>
+  <h2>1. Ask for access to the deck <span lang="th" class="thh">ขอสิทธิ์แก้ไขสไลด์จากเจ้าของไฟล์</span></h2>
+  <p>Ask the deck owner to share the deck with your Google account as <b>Editor</b> (in Google
+     Slides: <b>Share</b> → add your email → <b>Editor</b>). Use the account you will sign in with
+     in step 3: a company email or a personal Gmail both work. With Viewer or Commenter access your
+     AI can read the deck but not change it.</p>
+  <p lang="th" class="th">ขอให้เจ้าของไฟล์แชร์สไลด์ให้บัญชี Google ของคุณเป็น <b>ผู้แก้ไข (Editor)</b>
+     (ใน Google Slides: กด <b>Share</b> → ใส่อีเมลของคุณ → <b>Editor</b>) ใช้บัญชีเดียวกับที่จะล็อกอินในขั้นที่ 3
+     อีเมลบริษัทหรือ Gmail ส่วนตัวก็ได้ ถ้าได้สิทธิ์แค่ดู (Viewer) หรือแสดงความคิดเห็น (Commenter)
+     AI จะอ่านสไลด์ได้แต่แก้ไม่ได้</p>
+
+  <h2>2. Paste one line into your AI app <span lang="th" class="thh">วางข้อความนี้ในแอป AI</span></h2>
+  <p>Open one of the apps above on your computer and send it this message. In the Claude app,
+     choose the <b>Code</b> tab first; if it asks for a folder, any folder is fine (for example
+     Documents).</p>
+  <p lang="th" class="th">เปิดแอปข้างบนในคอมพิวเตอร์ แล้วส่งข้อความนี้ ถ้าใช้แอป Claude ให้เลือกแท็บ
+     <b>Code</b> ก่อน ถ้าแอปให้เลือกโฟลเดอร์ เลือกโฟลเดอร์ไหนก็ได้ (เช่น Documents)</p>
   <div class="copy">
     <code id="line">Read https://nokkanato.github.io/visrec-slides-setup/agent-setup.md and set me up</code>
     <button type="button" id="copybtn" aria-label="Copy the message">Copy</button>
   </div>
-  <p>The AI sets itself up. If you use the Claude app or claude.ai, the AI can't change settings
-     for you. It will guide you through <b>Settings → Customize → Connectors → + Add → Add custom connector</b>.</p>
-  <p lang="th" class="th">AI จะตั้งค่าให้เอง ถ้าใช้แอป Claude หรือ claude.ai ตัว AI จะเปลี่ยนการตั้งค่าแทนคุณไม่ได้
-     แต่จะบอกให้คุณทำทีละขั้นที่ <b>Settings → Customize → Connectors → + Add → Add custom connector</b></p>
+  <p>The AI installs a small program, the <b>Visrec Slides Kit</b>, in a folder called
+     <code>.visrec-slides</code> in your home folder. If your computer doesn’t have Node.js yet
+     (free, needed to run the kit), the AI installs it or shows you how.</p>
+  <p lang="th" class="th">AI จะติดตั้งโปรแกรมเล็กๆ ชื่อ <b>Visrec Slides Kit</b> ไว้ในโฟลเดอร์
+     <code>.visrec-slides</code> ในโฟลเดอร์ผู้ใช้ของคุณ ถ้าเครื่องยังไม่มี Node.js (ฟรี ต้องใช้เพื่อรันโปรแกรมนี้)
+     AI จะติดตั้งให้หรือบอกวิธี</p>
 
-  <h2>3. Sign in with Google <span lang="th" class="thh">ล็อกอินด้วย Google</span></h2>
-  <p>A browser window opens. First you see a page <b>“Application Access Request”</b> from Visrec
-     Slides: click <b>Allow Access</b>. Then sign in with the same Google account as in step 1, and
-     go back to your AI. Only start the login from your own AI app, never from a link someone
-     sends you.</p>
-  <p lang="th" class="th">จะมีหน้าต่างเบราว์เซอร์เปิดขึ้นมา หน้าแรกคือ <b>“Application Access Request”</b>
-     ของ Visrec Slides ให้กด <b>Allow Access</b> จากนั้นล็อกอินด้วยบัญชี Google เดียวกับขั้นที่ 1
-     แล้วกลับไปที่แอป AI ให้เริ่มล็อกอินจากแอป AI ของคุณเองเท่านั้น อย่ากดลิงก์ล็อกอินที่คนอื่นส่งมาให้</p>
+  <h2>3. Approve, then sign in with Google <span lang="th" class="thh">กดอนุญาต แล้วล็อกอินด้วย Google</span></h2>
+  <p>While it sets up, your AI app asks before it runs a command, downloads files or saves outside
+     its folder. Click <b>Allow</b> (or Approve / Yes). If Node.js has to be installed, your
+     computer may ask for your password.</p>
+  <p lang="th" class="th">ระหว่างตั้งค่า แอป AI จะถามก่อนรันคำสั่ง ดาวน์โหลดไฟล์ หรือบันทึกไฟล์นอกโฟลเดอร์ของมัน
+     ให้กด <b>Allow</b> (หรือ Approve / Yes) ถ้าต้องติดตั้ง Node.js เครื่องอาจถามรหัสผ่านเครื่องของคุณ</p>
+  <p>Then a browser window opens for Google sign-in:</p>
+  <ol>
+    <li>Sign in with the same Google account as in step 1.<br>
+        <span lang="th" class="th">ล็อกอินด้วยบัญชี Google เดียวกับขั้นที่ 1</span></li>
+    <li>Google shows <b>“Google hasn’t verified this app”</b>. This is expected for this company tool.
+        Click <b>Advanced</b>, then <b>Go to … (unsafe)</b>.<br>
+        <span lang="th" class="th">Google จะขึ้นว่า <b>“Google hasn’t verified this app”</b> เป็นเรื่องปกติของเครื่องมือภายในบริษัทนี้
+        ให้กด <b>Advanced</b> แล้วกด <b>Go to … (unsafe)</b></span></li>
+    <li>Tick the box that allows Google Slides, then click <b>Continue</b>.<br>
+        <span lang="th" class="th">ติ๊กช่องที่อนุญาตให้ใช้ Google Slides แล้วกด <b>Continue</b></span></li>
+    <li>Go back to your AI app. It tells you which account you are signed in with and asks for a
+        deck link to test.<br>
+        <span lang="th" class="th">กลับไปที่แอป AI จะบอกว่าคุณล็อกอินด้วยบัญชีไหน และขอลิงก์สไลด์เพื่อทดสอบ</span></li>
+  </ol>
+  <p>Only sign in when your own AI app opened the page. Never use a sign-in link someone sends you.</p>
+  <p lang="th" class="th">ล็อกอินเฉพาะตอนที่แอป AI ของคุณเปิดหน้านั้นขึ้นมาเอง อย่ากดลิงก์ล็อกอินที่คนอื่นส่งมาให้</p>
 
-  <h2>4. Wait for your slides <span lang="th" class="thh">รอ Nok แบ่งสไลด์ให้</span></h2>
-  <p>Nok gives each person a set of slides, for example slides 11–20. Until then you can read the
-     deck but not change it. You will also get comment access in Google Slides, so you can watch
-     the changes happen live.</p>
-  <p lang="th" class="th">Nok จะแบ่งสไลด์ให้แต่ละคน เช่น สไลด์ 11–20 ระหว่างรอ คุณอ่านสไลด์ได้แต่ยังแก้ไม่ได้
-     และคุณจะได้สิทธิ์แสดงความคิดเห็นใน Google Slides เพื่อดูการเปลี่ยนแปลงแบบสด</p>
-
-  <h2>5. Work on your slides <span lang="th" class="thh">เริ่มทำสไลด์ของคุณ</span></h2>
+  <h2>4. Ask for what you need <span lang="th" class="thh">สั่งงานได้เลย</span></h2>
   <p>Talk to your AI normally, in English or Thai. Some examples:</p>
   <p lang="th" class="th">คุยกับ AI ได้ตามปกติ เป็นภาษาไทยหรืออังกฤษก็ได้ ตัวอย่าง:</p>
   <ul class="examples">
-    <li>“Show me my slides in &lt;deck link&gt;”<br><span lang="th" class="th">“ขอดูสไลด์ของฉันใน &lt;ลิงก์สไลด์&gt;”</span></li>
+    <li>“Show me the slides in &lt;deck link&gt;”<br><span lang="th" class="th">“ขอดูสไลด์ใน &lt;ลิงก์สไลด์&gt;”</span></li>
     <li>“Do a storyboard for Content 3, 6 shots. Here is the script: …”<br><span lang="th" class="th">“ทำ storyboard ให้ Content 3 จำนวน 6 ช็อต สคริปต์ตามนี้: …”</span></li>
     <li>“Make a Gantt chart of the shooting schedule on a new slide”<br><span lang="th" class="th">“ทำ Gantt chart จากตารางถ่ายทำ ใส่ในสไลด์ใหม่”</span></li>
-    <li>“Tidy my slides: line up the pictures and make the font sizes the same”<br><span lang="th" class="th">“จัดสไลด์ของฉันให้เรียบร้อย จัดรูปให้ตรงกันและขนาดตัวอักษรเท่ากัน”</span></li>
+    <li>“Tidy slides 12–15: line up the pictures and make the font sizes the same”<br><span lang="th" class="th">“จัดสไลด์ 12–15 ให้เรียบร้อย จัดรูปให้ตรงกันและขนาดตัวอักษรเท่ากัน”</span></li>
+    <li>“Put the newest picture in my Downloads folder on slide 5”<br><span lang="th" class="th">“เอารูปล่าสุดในโฟลเดอร์ Downloads ใส่ในสไลด์ 5”</span></li>
     <li>“Move every date in my schedule 3 days later”<br><span lang="th" class="th">“เลื่อนวันที่ในตารางของฉันทั้งหมดออกไป 3 วัน”</span></li>
     <li>“Turn today’s client feedback into a checklist”<br><span lang="th" class="th">“สรุป feedback ลูกค้าวันนี้เป็น checklist”</span></li>
-    <li>“Who changed slide 12 today?”<br><span lang="th" class="th">“วันนี้ใครแก้สไลด์ 12 บ้าง”</span></li>
-    <li>“Check all my slides before we send them to the client, and show me a picture of each one”<br><span lang="th" class="th">“เช็กสไลด์ของฉันทั้งหมดก่อนส่งลูกค้า แล้วแสดงภาพของแต่ละสไลด์”</span></li>
+    <li>“Check slides 10–20 before we send them to the client, and show me a picture of each one”<br><span lang="th" class="th">“เช็กสไลด์ 10–20 ก่อนส่งลูกค้า แล้วแสดงภาพของแต่ละสไลด์”</span></li>
   </ul>
+  <p>Tell your AI which slides you are working on. Other people may be editing the same deck at the
+     same time, so it asks before changing slides you didn’t name. More ideas:
+     <a href="prompts.md">30 common requests and how the AI handles them</a>.</p>
+  <p lang="th" class="th">บอก AI ว่าคุณทำสไลด์ไหนอยู่ คนอื่นอาจแก้ไฟล์เดียวกันอยู่พร้อมกัน AI จึงจะถามก่อนแก้สไลด์ที่คุณไม่ได้บอก
+     ดูตัวอย่างเพิ่ม: <a href="prompts.md">30 คำสั่งที่ใช้บ่อย</a></p>
 
   <h3>What the AI can’t do (yet) <span lang="th" class="thh">สิ่งที่ AI ยังทำไม่ได้</span></h3>
   <ul>
-    <li>Change the footer or theme that sits on the slide layout. The deck owner changes it once by hand: Slide → Edit theme.<br>
-        <span lang="th" class="th">เปลี่ยน footer หรือธีมที่อยู่บน layout เจ้าของไฟล์แก้เองครั้งเดียว: Slide → Edit theme</span></li>
-    <li>Charts from Google Sheets. It can make a table or simple bars instead.<br>
-        <span lang="th" class="th">กราฟจาก Google Sheets (ทำเป็นตารางหรือแท่งกราฟง่ายๆ แทนได้)</span></li>
-    <li>Google Drive videos. YouTube links work.<br>
-        <span lang="th" class="th">วิดีโอจาก Google Drive (ลิงก์ YouTube ใช้ได้)</span></li>
+    <li>Change the footer or theme that sits on the slide layout. Do it once by hand: Slide → Edit theme.
+        It changes every slide, so check with the deck owner first.<br>
+        <span lang="th" class="th">เปลี่ยน footer หรือธีมที่อยู่บน layout ให้แก้เองครั้งเดียว: Slide → Edit theme
+        จะเปลี่ยนทุกสไลด์ จึงควรถามเจ้าของไฟล์ก่อน</span></li>
+    <li>Charts linked to Google Sheets. Add them by hand (Insert → Chart → From Sheets), or ask the AI
+        for a table or simple bars instead.<br>
+        <span lang="th" class="th">กราฟที่ลิงก์กับ Google Sheets ให้ใส่เอง (Insert → Chart → From Sheets) หรือให้ AI ทำเป็นตารางหรือแท่งกราฟง่ายๆ แทน</span></li>
+    <li>Google Drive videos. Add them by hand (Insert → Video). YouTube links work.<br>
+        <span lang="th" class="th">วิดีโอจาก Google Drive ให้ใส่เอง (Insert → Video) ลิงก์ YouTube ใช้ได้</span></li>
+    <li>Tell you who changed what. See the next section.<br>
+        <span lang="th" class="th">บอกว่าใครแก้อะไร ดูหัวข้อถัดไป</span></li>
   </ul>
+
+  <h2>Who changed what <span lang="th" class="thh">ใครแก้อะไร</span></h2>
+  <p>In Google Slides, open <b>File → Version history → See version history</b>. Each person’s
+     changes are listed under their own name, including changes their AI made. You can restore an
+     earlier version there too, but that also undoes everyone else’s later work, so talk to the
+     team first.</p>
+  <p lang="th" class="th">ใน Google Slides เปิด <b>ไฟล์ (File) → ประวัติเวอร์ชัน (Version history) → ดูประวัติเวอร์ชัน</b>
+     จะเห็นการแก้ไขของแต่ละคนตามชื่อ รวมถึงที่ AI ของเขาแก้ให้ กู้คืนเวอร์ชันเก่าได้จากตรงนี้
+     แต่จะย้อนงานของคนอื่นที่แก้หลังจากนั้นด้วย ควรคุยกับทีมก่อน</p>
 
   <h2>Good to know <span lang="th" class="thh">ควรรู้</span></h2>
   <ul>
-    <li>Pictures: ask your AI to put them on your slides. Links from the web or stock sites are fine if you may use them. A picture on your computer, from LINE or made by your AI: Claude Code, Codex, Gemini CLI and Antigravity can upload it themselves (they may ask you to allow it). In the Claude app or claude.ai, put the picture in your Google Drive and share it with <code>visrec-slides-bot@visual-record.iam.gserviceaccount.com</code> (Viewer), then give the AI the Drive link. PNG, JPEG or GIF, up to 20 MB. Never put the client’s private photos on public image sites.<br>
-        <span lang="th" class="th">รูปภาพ: สั่ง AI ให้ใส่รูปในสไลด์ของคุณได้เลย ลิงก์รูปจากเว็บหรือเว็บรูปสต็อกใช้ได้ถ้าเรามีสิทธิ์ใช้ รูปในเครื่อง รูปจาก LINE หรือรูปที่ AI สร้าง: Claude Code, Codex, Gemini CLI และ Antigravity อัปโหลดเองได้ (อาจขอให้คุณกดอนุญาต) ถ้าใช้แอป Claude หรือ claude.ai ให้เอารูปไว้ใน Google Drive ของคุณ แชร์ให้ <code>visrec-slides-bot@visual-record.iam.gserviceaccount.com</code> (ผู้มีสิทธิ์อ่าน) แล้วส่งลิงก์ Drive ให้ AI ใช้ไฟล์ PNG, JPEG หรือ GIF ไม่เกิน 20 MB ห้ามนำรูปส่วนตัวของลูกค้าไปไว้บนเว็บฝากรูปสาธารณะ</span></li>
-    <li>You can change only your own slides. Everyone can read the whole deck.<br>
-        <span lang="th" class="th">คุณแก้ได้เฉพาะสไลด์ของตัวเอง แต่ทุกคนอ่านได้ทั้งไฟล์</span></li>
-    <li>Slide numbers move when someone adds or deletes a slide. Your slides stay yours.<br>
-        <span lang="th" class="th">เลขสไลด์อาจเปลี่ยนเมื่อมีคนเพิ่มหรือลบสไลด์ แต่สไลด์ของคุณยังเป็นของคุณเหมือนเดิม</span></li>
-    <li>Several people can work at the same time.<br>
-        <span lang="th" class="th">หลายคนทำงานพร้อมกันได้</span></li>
+    <li>Pictures: give your AI a picture file on your computer (say where it is, for example “the
+        newest picture in Downloads”) or a link to the picture. You can also ask it to find
+        pictures on the web. Only use pictures you may use, and never put the client’s private
+        photos on public image sites.<br>
+        <span lang="th" class="th">รูปภาพ: บอก AI ว่ารูปอยู่ที่ไหนในเครื่อง (เช่น “รูปล่าสุดใน Downloads”) หรือส่งลิงก์รูปให้
+        จะให้ AI หารูปจากเว็บก็ได้ ใช้เฉพาะรูปที่เรามีสิทธิ์ใช้ และห้ามนำรูปส่วนตัวของลูกค้าไปไว้บนเว็บฝากรูปสาธารณะ</span></li>
+    <li>Your AI can change anything you can change in the deck. Tell it which slides are yours.<br>
+        <span lang="th" class="th">AI แก้ได้ทุกอย่างที่คุณแก้ได้ในไฟล์นั้น บอก AI ว่าสไลด์ไหนเป็นของคุณ</span></li>
+    <li>Slide numbers change when someone adds or deletes a slide. Your AI keeps track.<br>
+        <span lang="th" class="th">เลขสไลด์อาจเปลี่ยนเมื่อมีคนเพิ่มหรือลบสไลด์ AI จะตามให้เอง</span></li>
+    <li>Your AI app may ask before each kit command. You can choose the option that stops it asking
+        again for the kit.<br>
+        <span lang="th" class="th">แอป AI อาจถามทุกครั้งก่อนรันคำสั่งของ kit เลือกตัวเลือกที่ให้ไม่ต้องถามอีกสำหรับ kit นี้ได้</span></li>
+    <li>Your Google sign-in is saved on your computer, in the <code>.visrec-slides</code> folder.
+        Don’t share that folder.<br>
+        <span lang="th" class="th">ข้อมูลล็อกอิน Google ของคุณเก็บไว้ในเครื่องของคุณ ในโฟลเดอร์ <code>.visrec-slides</code> อย่าส่งโฟลเดอร์นี้ให้ใคร</span></li>
+    <li>To update the kit, send your AI: <code>Read https://nokkanato.github.io/visrec-slides-setup/agent-setup.md and update my Visrec Slides Kit</code><br>
+        <span lang="th" class="th">ถ้าจะอัปเดต kit ให้ส่งข้อความข้างบนให้ AI</span></li>
   </ul>
+
+  <h2>Remove it <span lang="th" class="thh">เลิกใช้</span></h2>
+  <p>Send your AI: <code>Read https://nokkanato.github.io/visrec-slides-setup/agent-setup.md and remove the Visrec Slides Kit</code>.
+     It signs you out and deletes the kit folder and its note. You can also remove the kit’s access
+     in your Google account at <a href="https://myaccount.google.com/connections">myaccount.google.com/connections</a>.</p>
+  <p lang="th" class="th">ส่งข้อความข้างบนให้ AI แล้ว AI จะออกจากระบบ ลบโฟลเดอร์ของ kit และบันทึกที่เกี่ยวข้อง
+     และคุณยกเลิกสิทธิ์ของ kit ในบัญชี Google ได้ที่ <a href="https://myaccount.google.com/connections">myaccount.google.com/connections</a></p>
+
+  <h2>For deck owners <span lang="th" class="thh">สำหรับเจ้าของไฟล์</span></h2>
+  <p>Share the deck with each person’s Google account as <b>Editor</b>. That’s all. To stop someone,
+     remove them in <b>Share</b>.</p>
+  <p lang="th" class="th">แชร์สไลด์ให้บัญชี Google ของแต่ละคนเป็น <b>ผู้แก้ไข (Editor)</b> แค่นั้นพอ
+     ถ้าจะหยุดให้ใครใช้ ก็เอาชื่อออกใน <b>Share</b></p>
 
   <h2>If something goes wrong <span lang="th" class="thh">ถ้ามีปัญหา</span></h2>
   <table>
-    <thead><tr><th>Message / ข้อความ</th><th>What to do / วิธีแก้</th></tr></thead>
+    <thead><tr><th>What you see / สิ่งที่เห็น</th><th>What to do / วิธีแก้</th></tr></thead>
     <tbody>
-      <tr><td>“not on the Visrec allowlist”</td>
-          <td>Ask Nok to add the exact email you signed in with to the Visrec system.<br>
-              <span lang="th" class="th">ขอให้ Nok เพิ่มอีเมลที่คุณใช้ล็อกอินเข้าระบบ Visrec (ต้องตรงกันทุกตัวอักษร)</span></td></tr>
-      <tr><td>“not shared with the bot” / “Cannot register deck”</td>
-          <td>Ask the deck owner to share the deck with
-              <code>visrec-slides-bot@visual-record.iam.gserviceaccount.com</code> as <b>Editor</b>.<br>
-              <span lang="th" class="th">ขอให้เจ้าของไฟล์แชร์สไลด์ให้อีเมลข้างบนเป็น <b>ผู้แก้ไข (Editor)</b></span></td></tr>
-      <tr><td>“no chunk” / can't edit</td>
-          <td>Wait for Nok to give you slides.<br>
-              <span lang="th" class="th">รอ Nok แบ่งสไลด์ให้</span></td></tr>
-      <tr><td>Login keeps repeating / “Authorization session mismatch”</td>
-          <td>Start the login again from your AI tool and finish it in the browser that opens. If it
-              repeats, remove Visrec Slides from your AI tool and add it again. Use the Google
-              account Nok approved.<br>
-              <span lang="th" class="th">เริ่มล็อกอินใหม่จากแอป AI แล้วทำให้เสร็จในเบราว์เซอร์ที่เปิดขึ้นมา ถ้ายังวนซ้ำ ให้ลบ Visrec Slides ออกจากแอป AI แล้วเพิ่มใหม่ และใช้บัญชี Google ที่ Nok อนุมัติ</span></td></tr>
+      <tr><td>“Google hasn’t verified this app”</td>
+          <td>Expected. Click <b>Advanced</b> → <b>Go to … (unsafe)</b> → tick the Slides box → <b>Continue</b>.<br>
+              <span lang="th" class="th">เป็นเรื่องปกติ กด <b>Advanced</b> → <b>Go to … (unsafe)</b> → ติ๊กช่อง Slides → <b>Continue</b></span></td></tr>
+      <tr><td>“Access blocked” / “This app is blocked”</td>
+          <td>Your company’s Google admin doesn’t allow outside apps for that account. Use another Google
+              account (for example a personal Gmail) and ask the deck owner to share the deck with it,
+              or ask your IT admin.<br>
+              <span lang="th" class="th">ผู้ดูแลระบบ Google ของบริษัทไม่อนุญาตแอปภายนอกสำหรับบัญชีนั้น ให้ใช้บัญชี Google อื่น
+              (เช่น Gmail ส่วนตัว) แล้วขอให้เจ้าของไฟล์แชร์สไลด์ให้บัญชีนั้น หรือถามฝ่าย IT ของบริษัท</span></td></tr>
+      <tr><td>The AI says it can’t run commands or install anything</td>
+          <td>You are in a chat-only app. Open the Claude app’s <b>Code</b> tab, Codex or Antigravity
+              and paste the line again.<br>
+              <span lang="th" class="th">คุณใช้แอปแบบแชตอย่างเดียวอยู่ ให้เปิดแท็บ <b>Code</b> ในแอป Claude, Codex หรือ Antigravity แล้ววางข้อความใหม่</span></td></tr>
+      <tr><td>The AI can read the deck but can’t change it</td>
+          <td>You have View or Comment access, or you signed in with another account. Ask your AI
+              “Which Google account am I signed in with?”, then ask the deck owner to share the deck
+              with that account as <b>Editor</b>.<br>
+              <span lang="th" class="th">คุณได้สิทธิ์แค่ดูหรือแสดงความคิดเห็น หรือล็อกอินด้วยบัญชีอื่น ถาม AI ว่า
+              “ฉันล็อกอินด้วยบัญชี Google ไหน” แล้วขอให้เจ้าของไฟล์แชร์ให้บัญชีนั้นเป็น <b>Editor</b></span></td></tr>
+      <tr><td>Signed in with the wrong Google account</td>
+          <td>Tell your AI: “Sign me out of Visrec Slides and sign me in again.”<br>
+              <span lang="th" class="th">บอก AI ว่า “ออกจากระบบ Visrec Slides แล้วล็อกอินใหม่”</span></td></tr>
+      <tr><td>Node.js is missing / “node: command not found”</td>
+          <td>The AI installs Node.js or shows you how. Afterwards, quit and reopen your AI app and
+              paste the line again.<br>
+              <span lang="th" class="th">AI จะติดตั้ง Node.js ให้หรือบอกวิธี เสร็จแล้วปิดแอป AI เปิดใหม่ แล้ววางข้อความอีกครั้ง</span></td></tr>
     </tbody>
   </table>
 
   <footer>
-    <p>For AI agents: <a href="agent-setup.md">agent-setup.md</a> · <a href="llms.txt">llms.txt</a></p>
+    <p>For AI agents: <a href="agent-setup.md">agent-setup.md</a> · <a href="prompts.md">prompts.md</a> · <a href="llms.txt">llms.txt</a></p>
     <p><a href="privacy.html">Privacy policy</a></p>
   </footer>
 </main>

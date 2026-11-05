@@ -1,254 +1,246 @@
 # Visrec Slides: setup instructions for AI agents
 
-You are an AI agent. Your user asked you to set them up for **Visrec Slides**. This is a
-remote MCP server that lets several people edit one shared Google Slides deck at the same time.
-Each person edits only their own chunk of slides through their own AI agent. Follow these steps
-in order. Keep the user informed in plain words, **in the language they write to you in** (Thai or
-English).
+You are an AI agent. Your user asked you to set them up for **Visrec Slides**. You will install the
+**Visrec Slides Kit**: a small command-line program (`vsk.mjs`, Node.js 18 or newer, no other
+dependencies) that runs on the user's own computer and reads and edits Google Slides decks with the
+user's **own Google account**. Their changes show under their own name in Google Slides' version
+history, like edits made by hand.
 
-- MCP server URL: `https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp`
-- Server name to use in configs: `visrec-slides`
-- Login: OAuth in the user's browser, in two pages: first an **"Application Access Request"**
-  page from Visrec Slides (click **Allow Access**), then "Sign in with Google". Never ask the
-  user to paste a password, token or login code into the chat.
-- Bot account that decks must be shared with: `visrec-slides-bot@visual-record.iam.gserviceaccount.com`
-- Who can use it: only people Nok has added to the Visrec system (a company email or a personal
-  Gmail both work). Anyone else edits the deck by hand in Google Slides; don't set them up.
+Follow the steps in order. Talk to the user in plain words, **in the language they write to you in**
+(Thai or English). Before each step, tell them what you are about to do and what they will see.
 
-Before you change a config file, tell the user what you are about to add. Add only the
-`visrec-slides` entry. Don't remove or change anything else. If the file exists, make a backup copy
-next to it first.
+| | |
+|---|---|
+| Kit files | `https://nokkanato.github.io/visrec-slides-setup/kit/vsk.mjs`<br>`https://nokkanato.github.io/visrec-slides-setup/kit/client.json` (Google login client for the kit; public, not a secret)<br>`https://nokkanato.github.io/visrec-slides-setup/kit/KIT_GUIDE.md` (how to use the kit) |
+| Install folder | `~/.visrec-slides/` (Windows: `%USERPROFILE%\.visrec-slides`) |
+| Run a kit command | `node ~/.visrec-slides/vsk.mjs <command>`<br>Windows PowerShell: `node "$env:USERPROFILE\.visrec-slides\vsk.mjs" <command>`<br>Every command prints JSON. Below, `vsk` is short for this. |
+| Who can use it | Anyone the deck is shared with **as Editor**. There is no list to join. |
+| Starter prompts | https://nokkanato.github.io/visrec-slides-setup/prompts.md |
 
----
-
-## Step 1: Work out which client you are running in
-
-Pick exactly one:
-
-| You are… | How to tell | Go to |
-|---|---|---|
-| **Claude Code** (terminal / IDE) | you can run shell commands and `claude --version` works | 2A |
-| **Claude** web, desktop app or mobile app (chat) | you cannot run shell commands | 2B |
-| **Codex CLI** (OpenAI) | `codex --version` works / you are Codex | 2C |
-| **Gemini CLI** | `gemini --version` works / you are Gemini CLI | 2D |
-| **Antigravity CLI or IDE** (Google) | `agy --version` works / you are Antigravity | 2E |
-
-If you can't tell, ask the user which app they are using.
-
-Note for Google users: Gemini CLI was replaced by Antigravity CLI for free-tier and Google One
-accounts on 2026-06-18 (per geminicli.com). Paid / Workspace Gemini CLI users can still use 2D.
+Rules for the whole setup:
+- Never ask the user to paste a password, token or login code into the chat. Never show the
+  contents of the kit's login files.
+- Don't overwrite a file you didn't create. If a file already exists, tell the user what you will
+  add and ask before you change it.
+- When your app asks the user to approve a command, network access or writing outside the project
+  folder, tell them what it is for and that they should approve it.
+- If a step fails, show the user the error in plain words (and its `hint`, if the JSON has one)
+  and stop. Don't work around it by changing other settings on the computer.
 
 ---
 
-## Step 2A: Claude Code
+## Step 1: Check that you can run commands on this computer
 
-<!-- Claude Code `claude mcp add --transport http` syntax: Anthropic Claude Code docs
-     (code.claude.com/docs/en/mcp), checked 2026-11-04. Verified live 2026-11-05 (Claude Code 2.1). -->
+Run `node -v`. Any answer counts here, even "command not found": what matters is that you can run
+commands on the user's own computer. Note which shell you have (macOS / Linux / Git Bash, or
+Windows PowerShell) and use the matching commands below.
 
-1. Run:
-   ```bash
-   claude mcp add --transport http visrec-slides --scope user https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp
-   ```
-2. You can't do the login yourself. Tell the user: *"Type `/mcp`, choose **visrec-slides**,
-   follow the login prompt. A browser opens. On the "Application Access Request" page click
-   **Allow Access**, then sign in with Google using the email Nok added for you."*
-3. After they confirm, go to Step 3. If the tools don't show up yet, ask the user to restart
-   Claude Code (or start a new session) and continue from Step 3.
+Stop if you can't run commands (chat-only apps: claude.ai or Claude phone chat, ChatGPT, Gemini in a
+browser or on a phone) or if you run somewhere other than the user's computer (for example Codex
+cloud tasks or Claude's Cowork mode). Tell the user, in their language:
 
-## Step 2B: Claude web / desktop / mobile
+> This needs an AI app that can run programs on your computer. Please open the **Code** tab in the
+> Claude desktop app (or Claude Code), the **Codex** app, or **Antigravity**, and paste the same
+> line there: `Read https://nokkanato.github.io/visrec-slides-setup/agent-setup.md and set me up`
 
-<!-- Verified live on claude.ai 2026-11-05. -->
+> ขั้นตอนนี้ต้องใช้แอป AI ที่รันโปรแกรมบนเครื่องของคุณได้ กรุณาเปิดแท็บ **Code** ในแอป Claude
+> บนคอมพิวเตอร์ (หรือ Claude Code), แอป **Codex** หรือ **Antigravity** แล้ววางข้อความเดิมอีกครั้ง:
+> `Read https://nokkanato.github.io/visrec-slides-setup/agent-setup.md and set me up`
 
-You can't change these settings yourself. Walk the user through it, one step at a time:
+## Step 2: Make sure Node.js 18 or newer is installed
 
-1. Open **Settings → Customize → Connectors** (on claude.ai or in the Claude desktop app; older
-   versions had it under Settings → Connectors). On mobile, set it up once on the web or desktop
-   app first; it then works on mobile too.
-2. Click **+ Add** (top right) → **Add custom connector**.
-   - Name: `Visrec Slides`
-   - URL: `https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp`
-   - Leave the advanced / OAuth Client ID fields **empty**. If Claude shows choices for
-     Authentication and OAuth client, keep the defaults (**Sign in now**, **Use Claude's
-     published identity**).
-   - If it says **"Couldn't check the server"**, the server was asleep: wait 15 seconds, cancel
-     and add it again.
-3. Click **Continue** (older versions: **Add**, then **Connect**). A page "Application Access Request" opens first: check that
-   the callback address starts with `https://claude.ai/` (or `https://claude.com/`), then click
-   **Allow Access**. Then sign in with Google using the email Nok added.
-4. In a chat, make sure the **Visrec Slides** connector is turned on (the tools / "+" menu in the
-   message box).
-5. If there is no "Add custom connector" button: on Claude Team/Enterprise plans only an
-   organization owner can add custom connectors. Ask the user to ask their Claude admin.
+`node -v` prints something like `v22.11.0`. 18 or higher: go to Step 3.
 
-Then go to Step 3 (in a new chat if the tools don't appear).
+Missing or older:
+- **macOS:** if `brew -v` works, run `brew install node` (`brew upgrade node` if Homebrew's Node is
+  old). Otherwise ask the user to download the **LTS** installer (.pkg) from https://nodejs.org,
+  open it and click through.
+- **Windows:** run `winget install OpenJS.NodeJS.LTS`. If there is no `winget`, ask the user to
+  install the **LTS** installer (.msi) from https://nodejs.org.
+- **Linux:** install Node 18+ with the system package manager or from https://nodejs.org.
 
-## Step 2C: Codex CLI
+Tell the user their computer may ask for **their computer password** (macOS) or to click **Yes**
+(Windows). That is their own computer asking, not you. Then run `node -v` again. If it is still not
+found, the new Node isn't visible to this session yet: ask the user to quit and reopen the app (or
+start a new session), then paste the starter line again. Steps already done are skipped quickly.
 
-<!-- Source: OpenAI Codex docs, https://learn.chatgpt.com/docs/extend/mcp?surface=cli
-     (redirected from developers.openai.com/codex/mcp), checked 2026-11-04.
-     Verified live 2026-11-05 with Codex CLI 0.166. -->
+## Step 3: Download the kit
 
-1. Add the server, either with the CLI:
-   ```bash
-   codex mcp add visrec-slides --url https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp
-   ```
-   or by adding this to `~/.codex/config.toml`:
-   ```toml
-   [mcp_servers.visrec-slides]
-   url = "https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp"
-   ```
-2. Log in:
-   ```bash
-   codex mcp login visrec-slides
-   ```
-   A browser opens. The user clicks **Allow Access** on the "Application Access Request" page,
-   then signs in with Google using the email Nok added. In the Codex desktop app, use
-   **Authenticate** next to the server instead. `codex mcp add` may open this login by itself
-   right away; it times out after a few minutes, so if the user was too slow, run
-   `codex mcp login visrec-slides` again.
-3. Ask the user to restart Codex, then go to Step 3.
-4. Codex asks the user to allow each editing tool the first time (e.g. *Allow the visrec-slides
-   MCP server to run tool "replace_text"?*). Tell them to choose **Allow for this session**.
+macOS / Linux / Git Bash:
+```bash
+mkdir -p ~/.visrec-slides && chmod 700 ~/.visrec-slides && \
+curl -fsSL -o ~/.visrec-slides/vsk.mjs      https://nokkanato.github.io/visrec-slides-setup/kit/vsk.mjs && \
+curl -fsSL -o ~/.visrec-slides/client.json  https://nokkanato.github.io/visrec-slides-setup/kit/client.json && \
+curl -fsSL -o ~/.visrec-slides/KIT_GUIDE.md https://nokkanato.github.io/visrec-slides-setup/kit/KIT_GUIDE.md && \
+chmod 600 ~/.visrec-slides/client.json && \
+node ~/.visrec-slides/vsk.mjs help
+```
 
-## Step 2D: Gemini CLI
+Windows PowerShell (a folder in the user's profile is already private to them; no extra step):
+```powershell
+$d = "$env:USERPROFILE\.visrec-slides"; $u = "https://nokkanato.github.io/visrec-slides-setup/kit"
+New-Item -ItemType Directory -Force -Path $d | Out-Null
+curl.exe -fsSL -o "$d\vsk.mjs"      "$u/vsk.mjs"
+curl.exe -fsSL -o "$d\client.json"  "$u/client.json"
+curl.exe -fsSL -o "$d\KIT_GUIDE.md" "$u/KIT_GUIDE.md"
+node "$d\vsk.mjs" help
+```
 
-<!-- Source: https://geminicli.com/docs/tools/mcp-server/ , checked 2026-11-04.
-     Not tested against this server yet (live test 2026-11-05 used Claude and Codex). -->
+`help` must print JSON with the list of commands. If a download fails or `help` doesn't work, show
+the error and stop. This step needs network access and writes outside the project folder, so your
+app may ask the user to approve it (Codex: running it outside the sandbox).
 
-1. Add the server for this user (all projects):
-   ```bash
-   gemini mcp add --transport http --scope user visrec-slides https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp
-   ```
-   or add this to `~/.gemini/settings.json` under `mcpServers` (note **`httpUrl`**: `url` would mean
-   the older SSE transport):
-   ```json
-   {
-     "mcpServers": {
-       "visrec-slides": {
-         "httpUrl": "https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp"
-       }
-     }
-   }
-   ```
-2. Ask the user to restart Gemini CLI. Login is discovered automatically: on first use a browser
-   opens; the user clicks **Allow Access**, then signs in with Google. If not, the user types
-   `/mcp auth visrec-slides`.
-3. Go to Step 3.
+## Step 4: Sign in with Google
 
-## Step 2E: Antigravity CLI or IDE
+First tell the user what will happen, in their language:
 
-<!-- Source: https://antigravity.google/docs/mcp , checked 2026-11-04.
-     Not tested against this server yet (live test 2026-11-05 used Claude and Codex). -->
+> A browser window will open for Google sign-in.
+> 1. Sign in with the **same Google account the deck is shared with**.
+> 2. Google shows **"Google hasn't verified this app"**. That is expected for this company tool.
+>    Click **Advanced**, then **Go to … (unsafe)**.
+> 3. **Tick the box** that allows Google Slides, then click **Continue**.
+> 4. When the browser says you're done, come back here.
 
-1. Add this entry to `~/.gemini/config/mcp_config.json` (create the file if missing; keep other
-   entries):
-   ```json
-   {
-     "mcpServers": {
-       "visrec-slides": {
-         "serverUrl": "https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp"
-       }
-     }
-   }
-   ```
-2. Tell the user: *"Type `/mcp` to open the MCP manager and reload. Then open Agent settings
-   (Cmd/Ctrl + ,) → Customizations → **Authenticate** next to visrec-slides. Click **Allow
-   Access**, sign in with Google, then paste the code the browser shows back into that panel
-   and click Submit."*
-3. Go to Step 3.
+> จะมีหน้าต่างเบราว์เซอร์เปิดขึ้นมาให้ล็อกอิน Google
+> 1. ล็อกอินด้วย **บัญชี Google เดียวกับที่ได้รับแชร์สไลด์**
+> 2. Google จะขึ้นว่า **"Google hasn't verified this app"** เป็นเรื่องปกติของเครื่องมือภายในบริษัทนี้
+>    ให้กด **Advanced** แล้วกด **Go to … (unsafe)**
+> 3. **ติ๊กช่อง** ที่อนุญาตให้ใช้ Google Slides แล้วกด **Continue**
+> 4. เมื่อเบราว์เซอร์บอกว่าเสร็จแล้ว ให้กลับมาที่นี่
+
+Then run:
+```bash
+node ~/.visrec-slides/vsk.mjs login
+```
+- It waits until the user finishes in the browser. Run it with a long timeout (at least 5
+  minutes) and don't stop it early.
+- It needs network access and opens the browser, so a sandboxed app (Codex) must run it outside the
+  sandbox. The user approves.
+- If no browser opens, the output says what to do (for example a link to open in the browser on
+  this computer). Pass that on to the user.
+- If it fails, tell the user the error's `hint` in plain words and stop. See Troubleshooting below.
+- If the user didn't tick the Slides box, the kit can't edit. Run `login` again and remind them.
+
+Then run `node ~/.visrec-slides/vsk.mjs whoami` and tell the user: "You're signed in as
+name@example.com." Ask if that is the account the deck is shared with. If not: `vsk logout`, then
+`vsk login` again with the right account.
+
+## Step 5: Remember the kit for later chats
+
+Save a short note in your own app's global memory, so you use the kit in future chats. Do only the
+part for the app you are. Never overwrite existing content: if the file already exists, show the
+user what you will add and ask first.
+
+### Claude Code / Claude desktop app (Code tab)
+
+Create the skill `~/.claude/skills/visrec-slides/SKILL.md`: frontmatter, then the full text of
+`KIT_GUIDE.md`, then one line with the starter prompts link. If `SKILL.md` already exists (an
+earlier setup), ask the user before replacing it.
+
+macOS / Linux / Git Bash:
+```bash
+mkdir -p ~/.claude/skills/visrec-slides && {
+  printf '%s\n' '---' 'name: visrec-slides' \
+    'description: "Read and edit Google Slides decks with the Visrec Slides Kit (vsk). Use when the user wants to see, change, check or add to a Google Slides deck, such as a Visrec deck or a docs.google.com/presentation link (storyboards, Gantt charts, tidy layouts, pictures, footers, speaker notes)."' \
+    '---' ''
+  cat ~/.visrec-slides/KIT_GUIDE.md
+  printf '\n%s\n' 'Starter requests and how to handle each: https://nokkanato.github.io/visrec-slides-setup/prompts.md'
+} > ~/.claude/skills/visrec-slides/SKILL.md
+```
+
+Windows PowerShell:
+```powershell
+$s = "$env:USERPROFILE\.claude\skills\visrec-slides"
+New-Item -ItemType Directory -Force -Path $s | Out-Null
+$head = @('---', 'name: visrec-slides',
+  'description: "Read and edit Google Slides decks with the Visrec Slides Kit (vsk). Use when the user wants to see, change, check or add to a Google Slides deck, such as a Visrec deck or a docs.google.com/presentation link (storyboards, Gantt charts, tidy layouts, pictures, footers, speaker notes)."',
+  '---', '') -join "`n"
+$guide = [IO.File]::ReadAllText("$env:USERPROFILE\.visrec-slides\KIT_GUIDE.md")
+$tail = "`nStarter requests and how to handle each: https://nokkanato.github.io/visrec-slides-setup/prompts.md`n"
+[IO.File]::WriteAllText("$s\SKILL.md", $head + "`n" + $guide + $tail)
+```
+
+The skill is active in new sessions.
+
+### Codex (app or CLI)
+
+Append this section to `~/.codex/AGENTS.md` (if `CODEX_HOME` is set: `$CODEX_HOME/AGENTS.md`;
+Windows: `%USERPROFILE%\.codex\AGENTS.md`). Create the file if it is missing. Append, never
+replace. If the file already has a "Visrec Slides Kit" section, leave it as it is.
+
+```markdown
+
+## Visrec Slides Kit
+To read or edit Google Slides decks (Visrec decks, docs.google.com/presentation links), use the
+Visrec Slides Kit: `node ~/.visrec-slides/vsk.mjs <command>` (output is JSON). Before the first
+kit command in a session, read `~/.visrec-slides/KIT_GUIDE.md` and follow it. Starter requests and
+how to handle each: https://nokkanato.github.io/visrec-slides-setup/prompts.md
+```
+
+On Windows, write the paths in that section as `"$env:USERPROFILE\.visrec-slides\vsk.mjs"` and
+`$env:USERPROFILE\.visrec-slides\KIT_GUIDE.md`.
+
+### Antigravity
+
+Append the same section to `~/.gemini/GEMINI.md` (Windows: `%USERPROFILE%\.gemini\GEMINI.md`), with
+the same rules as for Codex.
+
+### Another app that can run commands
+
+Append the same section to that app's global instructions file. If you aren't sure which file that
+is, ask the user.
+
+## Step 6: Quick test
+
+Ask the user for a deck link (`https://docs.google.com/presentation/d/…`). Run:
+```bash
+node ~/.visrec-slides/vsk.mjs outline --deck "<deck link>"
+```
+Show a short summary: the deck's title, how many slides, and a few slide titles. Then tell the user
+the setup is done: who they are signed in as, that a new chat picks up the kit (Step 5), and three
+example requests from the starter prompts.
+
+If `outline` fails with a permission or "not found" error, the deck isn't shared with the signed-in
+account. Tell the user to ask the deck owner to share it with the email from `whoami` as
+**Editor**. With Viewer or Commenter access, `outline` works but edits fail; they also need Editor.
+
+## Step 7: Update or remove (when the user asks)
+
+**Update** ("update my Visrec Slides Kit"): run the Step 3 downloads again. They replace the three
+kit files; the login is kept, so no new sign-in is needed. Claude: rebuild the skill from Step 5
+(it holds a copy of `KIT_GUIDE.md`, so replacing it is expected here; tell the user). Codex and
+Antigravity: nothing to change, their section points at the file. Run `vsk help` and `vsk whoami`
+to check.
+
+**Remove** ("remove the Visrec Slides Kit"): tell the user what you will delete, ask OK, then:
+1. `node ~/.visrec-slides/vsk.mjs logout`
+2. Delete the folder: `rm -rf ~/.visrec-slides`
+   (PowerShell: `Remove-Item -Recurse -Force "$env:USERPROFILE\.visrec-slides"`).
+3. Claude: delete the folder `~/.claude/skills/visrec-slides/`. Codex / Antigravity: remove only the
+   "Visrec Slides Kit" section from `AGENTS.md` / `GEMINI.md` and keep everything else.
+4. Tell the user they can also remove the kit's access at https://myaccount.google.com/connections.
 
 ---
 
-## Step 3: Check that it works
+## How to work on the deck after setup
 
-Call these tools. Your client may show them with a prefix, e.g. `mcp__visrec-slides__whoami`.
+Use the commands as `KIT_GUIDE.md` describes. Playbooks for 30 common requests:
+**https://nokkanato.github.io/visrec-slides-setup/prompts.md**
 
-1. **`whoami`**. You should get the user's email. Confirm with the user that it's the right Google
-   account.
-2. **`list_my_decks`**. Shows the decks they're in. An empty list is normal until Nok assigns
-   them slides.
-
-Tell the user the setup is done. Give them a short summary: who they're signed in as, and which
-decks and slides they have.
-
----
-
-## Step 4: How to work on the user's slides (keep following these rules)
-
-1. Call **`my_chunk(deck)`** first. It lists the slides you may edit (number, objectId, preview).
-   `deck` is the Google Slides URL or ID.
-2. Call **`read_slide(deck, slide)`** before you change a slide. It gives element objectIds,
-   text and positions.
-3. Make the change:
-   - **`replace_text(deck, slide, map)`**: change wording and keep the formatting. `map` is
-     `{"old text": "new text"}`; `slide` can be `"all"` for every slide in the chunk.
-   - **`duplicate_slide(deck, from_slide, replace_text_map?, index?)`**: make a new slide by
-     copying any slide as a template (`from_slide`), optionally swapping text on the copy. The
-     copy joins the user's chunk.
-   - **`delete_slide(deck, slide)`**: only for the user's own slides.
-   - **`insert_image(deck, slide, ...)`**: put a picture on the user's slide. Give ONE source:
-     `url` (any https picture link: the server downloads it), `drive_file_id` (the user's own
-     Drive file, shared with the bot), `image_base64` (small pictures only: you must type every
-     character), or `upload_id` (see below). Where: `replace_element` = objectId of an image or a
-     shape on that slide (from `read_slide`), or a box `x, y, w, h` in EMU, or nothing = centred.
-     `fit: "crop"` fills the box and cuts the edges; the default `"fit"` shows the whole picture.
-     PNG, JPEG or GIF only, up to 20 MB (convert WebP/HEIC/SVG first).
-   - **Pictures on this computer** (a file the user gave you, or one you generated), if you can
-     run shell commands: call **`image_upload_url(deck)`**, run the `curl` command it returns
-     with the real file path (within 10 minutes), then `insert_image(deck, slide,
-     upload_id=...)`. One upload = one try at one picture; the link is private, don't show it
-     to others.
-   - **`batch_update(deck, requests)`**: raw Google Slides API requests for anything else.
-   - Slide numbers shift when anyone adds or deletes slides. After you add slides, re-check
-     numbers with `my_chunk`, or use the slide's objectId, which never changes.
-4. Call **`thumbnail(deck, slide)`** after each change and look at it. Fix text that doesn't fit,
-   overlaps, or runs off the slide.
-5. When you're done, call **`check_my_chunk(deck)`**. Then look at a thumbnail of every changed
-   slide before you tell the user it's finished.
-6. To see what others changed recently, call **`deck_activity(deck)`** (who changed which
-   slides, when). It shows only changes made through Visrec Slides AI, not edits made by hand in
-   Google Slides (deck editors can see those in File → Version history).
-
-How to handle a request:
-- **Vague request** ("do a storyboard"): ask ONE short question first (which content or slides,
-  and what input: brief, script, dates). Don't guess the content.
-- **Copy the deck's own look**: build new slides with `duplicate_slide` from an existing slide of
-  the same kind, then change the text. Never invent a new style.
-- **One slide first**: do one, `thumbnail`, show the user, then do the rest.
-- **Thai text runs longer and taller**: check every changed slide with `thumbnail`.
-- **Before deleting or replacing across many slides**: list what will change and ask "OK?".
-
-Rules:
-- Edit **only the user's own chunk**. Reading other slides for context is fine. The theme,
-  masters, layouts and anything on a layout (often the footer) can't be edited by anyone here.
-- If the server refuses an edit, **don't try to get around it** (no splitting, renaming ids,
-  retrying another way, or using other tools or accounts to edit the deck). Tell the user what
-  was refused and suggest asking a deck admin (Nok) to assign that slide.
-- Slide **numbers** change when anyone adds or deletes slides. Use objectIds in follow-up calls,
-  and call `my_chunk` again when you're unsure.
-- If you get "deck busy", wait a few seconds and retry once.
-- Reply to the user in their language (Thai or English).
-
-### Common requests
-
-| User asks | What to do | If it isn't possible, say |
-|---|---|---|
-| "Do a storyboard" / ทำ storyboard | Ask which content, how many shots, the script. `duplicate_slide` an existing storyboard slide, `replace_text` the title, descriptions and shot texts. | Pictures: see "Put images in". |
-| "Make a Gantt chart" / ทำ Gantt chart | Read the schedule slides. Build a table with `batch_update` (`createTable`: tasks = rows, weeks = columns; colour busy cells with `updateTableCellProperties`) or bars with `createShape`. | Charts from Google Sheets are blocked; a table or shape bars is the way. |
-| "Tidy the slides" / จัดสไลด์ให้เรียบร้อย | `read_slide`, then align/resize with `updatePageElementTransform` and even font sizes with `updateTextStyle`. One slide first + `thumbnail`. | |
-| "Put images in" / ใส่รูป (incl. "make a picture of X and put it on slide 5") | `insert_image`. **Web or stock picture, the client's site:** `url` (the link must open the picture itself). **The user's Google Drive file:** `drive_file_id` (they share it with the bot from their own account, Viewer is enough). **A file on this computer, from LINE, or a picture you generated** (CLI agents): `image_upload_url` → run its `curl` → `insert_image(upload_id=...)`; a tiny one can go as `image_base64`. Put it in a placeholder box with `replace_element`, then `thumbnail`. Only use pictures the user may use. | Claude web/desktop chat can't pass on a picture pasted into the chat and can't run curl: ask the user to put it in Google Drive and share it with the bot, or give a link. Codex: its sandbox may block the network for `curl`, so the user may have to approve it. Gemini CLI / Antigravity ask before running shell commands. Never put the client's private photos on public image sites to get a link. |
-| "Update the footer" / อัปเดต footer | `read_slide` first. If the footer is a normal text box on each slide: `replace_text` with slide `"all"`. | If it sits on the layout: the deck owner changes it once by hand (Slide → Edit theme); all slides update. |
-| "Who edited this slide?" / ใครแก้สไลด์นี้ | `list_chunks` = whose slide it is; `deck_activity` = AI edits (who, when, what). | Hand edits are only in Google Slides → File → Version history (deck editors). |
-| "Rename X to Y in the whole deck" / "Change price 189 to 199" | List every place first (watch "189.-", "1,189"), ask OK, then `replace_text` with slide `"all"`. Then say which other people's slides still contain it. | Other people's slides: they change theirs. |
-| "Translate to English" / "Fix typos" / "Shorten to fit" | `read_slide`, `replace_text` per box, `thumbnail` (length changes). List typos with slide numbers and apply after OK. | |
-| "Turn the client feedback into a checklist" | Read the feedback slides, group by content, give the list in chat; put it on a new slide (`duplicate_slide`) if asked. | |
-| "Move the whole schedule 3 days later" | Read the date tables, recompute every date with the right weekday, show old → new, ask about weekends/holidays, apply. | |
-| "Write speaker notes" | `insertText` into each slide's `speakerNotesObjectId` (from `read_slide`). | |
-| "Check everything before we send it" | `check_my_chunk` + a `thumbnail` of each slide; judge by the picture ("off page" is often a big text box or a picture placed half off on purpose). | |
-| "Move my slides after section X" | `updateSlidesPosition`, own slides only; warn that slide numbers change for everyone. | |
-| "Change the theme / fonts of the whole deck" | Fonts: slide by slide on the user's own slides (`updateTextStyle`). | Theme and master are locked for everyone: the deck owner does it by hand. |
-| "Add a reference video" | `createVideo` from YouTube. | Google Drive videos are refused. |
-| "Give slides 1–20 to A and 21–40 to B" | Deck admins only: `assign_chunk` per person (emails must be in the Visrec system). | Not an admin: ask the deck admin. |
+1. **Vague request** ("do a storyboard"): ask ONE short question first (which content or slides,
+   and what input: brief, script, dates). Don't guess the content.
+2. **Copy the deck's own look**: make new slides with `dup` from an existing slide of the same
+   kind, then change the text. Never invent a new style.
+3. **One slide first**: do one, `thumb` it, look at the picture, show the user, then do the rest.
+4. **Thai text runs longer and taller**: `thumb` every changed slide and fix text that doesn't fit,
+   overlaps or runs off the slide.
+5. **Other people work in the same deck at the same time**, and the kit can change any slide the
+   user can. Change only the slides the user asked about. Before anything that touches other
+   slides (`replace` without `--slide`, `move-slide`, `del`), list what will change and ask "OK?".
+6. **Use ids, not slide numbers.** Numbers move when anyone adds or deletes a slide. Run `outline`
+   again when unsure.
+7. **Who changed what** is in Google Slides → File → Version history. The kit can't read it.
+8. Reply in the user's language (Thai or English).
 
 ---
 
@@ -256,14 +248,15 @@ Rules:
 
 | What you see | What it means | What to tell the user |
 |---|---|---|
-| "… is not on the Visrec allowlist" | the email they signed in with isn't in the Visrec system | Ask Nok to add that exact email to the Visrec system. Or, if they used the wrong Google account, sign out and sign in with the right one. No reinstall needed. |
-| "Cannot register deck … Check both" | the deck isn't shared with the bot as Editor, **or** the user isn't an owner/editor of it (shared directly to their email) | The deck owner must share it with `visrec-slides-bot@visual-record.iam.gserviceaccount.com` as **Editor**, and the person registering must own or be able to edit the deck. |
-| "not shared with the bot" / "cannot edit it" | the deck isn't shared with the bot account as Editor | The deck owner must share it with `visrec-slides-bot@visual-record.iam.gserviceaccount.com` as **Editor**. |
-| "not registered on this server yet" | nobody has set the deck up yet | A deck owner/editor (usually Nok) asks their agent to `register_deck` it. |
-| "You have no chunk in this deck" / "Your chunk … has no slides now" / my_chunk is empty | no slides assigned (or they were taken away) | Wait for Nok to assign slides. Until then the deck is read-only. |
-| "not in your chunk" | that slide belongs to someone else or nobody | Don't retry. Ask Nok to assign it if they need it. |
-| "Cannot use Drive file … it is YOUR file" | the Drive file isn't shared with the bot, or it's someone else's file | Share it with `visrec-slides-bot@visual-record.iam.gserviceaccount.com` (Viewer) **from your own account**. Someone else's picture: they share it, or download it and use an upload. |
-| "That link opens a web page" / "not a public …" / "HTTP 403" for a picture link | the link isn't the picture itself, is private, or blocks downloads | Open the picture on its own and copy that link, or download it and use an upload (CLI) or Drive. |
-| "WebP" / "HEIC" / "SVG" / "megapixels" | wrong picture type or too big | Convert to PNG or JPEG (macOS: `sips -s format png in.webp --out out.png`), or make it smaller. |
-| Login loops, or the browser shows an error after Google sign-in ("Authorization session mismatch", "Invalid redirect URI") | stale or failed login, or the login was started in a different browser | Start the login again from the app itself and finish it in the browser that opens (don't use a login link someone sent you). If it repeats, remove the server (Claude: delete the connector; CLIs: remove the entry) and add it again. Use the same Google account Nok approved. Make sure the browser isn't blocking pop-ups. If it still fails, send Nok a screenshot of the error page. |
-| Tools don't appear after login | client hasn't reloaded | Restart the app/CLI or open a new chat. |
+| `node: command not found` / `'node' is not recognized` | Node.js is missing, or was just installed and this session can't see it yet | Step 2. After installing, quit and reopen the app, then paste the starter line again. |
+| A download fails (404, could not resolve host, blocked) | no network permission, or the kit files aren't reachable | Approve network access when the app asks. If it still fails, send the error to the person who gave you this page. |
+| "Google hasn't verified this app" | expected for this company tool | Click **Advanced** → **Go to … (unsafe)** → tick the Slides box → **Continue**. |
+| "Access blocked", "This app is blocked", `admin_policy_enforced` | the user's company Google admin blocks outside apps for that account | Use another Google account (for example a personal Gmail) and ask the deck owner to share the deck with that one, or ask the company's IT admin. |
+| `access_denied`, or the browser was closed | the user clicked Cancel or closed the window | Run `vsk login` again. |
+| Login says the Slides permission is missing | the Slides box wasn't ticked | Run `vsk login` again and tick the box. |
+| Permission denied / "not found" for a deck | the deck isn't shared with the signed-in account, or only as Viewer/Commenter | Check `vsk whoami`. Ask the deck owner to share the deck with that email as **Editor**. |
+| Wrong Google account | signed in with a different account | `vsk logout`, then `vsk login` with the right one. |
+| Token expired / `invalid_grant` | the saved login no longer works (for example the user removed access in their Google account) | Run `vsk login` again. |
+| An element or slide id is suddenly "not found" | someone else changed or deleted it a moment ago | Run `outline` / `read` again and continue with the new ids. |
+| A picture link fails | the link opens a web page, is private, or blocks downloads | Use the link of the picture itself, or download it and use `image --file`. |
+| "WebP" / "HEIC" / "SVG" / picture too big | the picture type isn't supported, or it is too large | Convert to PNG or JPEG (macOS: `sips -s format png in.heic --out out.png`) or make it smaller. |
