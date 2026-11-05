@@ -874,7 +874,7 @@ CMD.logout = {
     if (t) {
       try { await request(ctx, REVOKE_URL, { method: 'POST', auth: false, form: { token: t }, what: 'sign out at Google' }); revoked = true } catch (e) {
         if (e.status === 400) revoked = 'already invalid'
-        else ctx.warnings.push('Could not reach Google to cancel the login there; you can remove "Visrec Slides Kit" at https://myaccount.google.com/permissions')
+        else ctx.warnings.push('Could not reach Google to cancel the login there; you can remove "Visrec Slides" at https://myaccount.google.com/connections')
       }
     }
     fs.rmSync(file, { force: true })
