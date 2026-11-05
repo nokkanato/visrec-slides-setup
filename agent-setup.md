@@ -196,8 +196,18 @@ decks and slides they have.
    slides, when). It shows only changes made through Visrec Slides AI, not edits made by hand in
    Google Slides (deck editors can see those in File → Version history).
 
+How to handle a request:
+- **Vague request** ("do a storyboard"): ask ONE short question first (which content or slides,
+  and what input: brief, script, dates). Don't guess the content.
+- **Copy the deck's own look**: build new slides with `duplicate_slide` from an existing slide of
+  the same kind, then change the text. Never invent a new style.
+- **One slide first**: do one, `thumbnail`, show the user, then do the rest.
+- **Thai text runs longer and taller**: check every changed slide with `thumbnail`.
+- **Before deleting or replacing across many slides**: list what will change and ask "OK?".
+
 Rules:
-- Edit **only the user's own chunk**. Reading other slides for context is fine.
+- Edit **only the user's own chunk**. Reading other slides for context is fine. The theme,
+  masters, layouts and anything on a layout (often the footer) can't be edited by anyone here.
 - If the server refuses an edit, **don't try to get around it** (no splitting, renaming ids,
   retrying another way, or using other tools or accounts to edit the deck). Tell the user what
   was refused and suggest asking a deck admin (Nok) to assign that slide.
@@ -205,6 +215,27 @@ Rules:
   and call `my_chunk` again when you're unsure.
 - If you get "deck busy", wait a few seconds and retry once.
 - Reply to the user in their language (Thai or English).
+
+### Common requests
+
+| User asks | What to do | If it isn't possible, say |
+|---|---|---|
+| "Do a storyboard" / ทำ storyboard | Ask which content, how many shots, the script. `duplicate_slide` an existing storyboard slide, `replace_text` the title, descriptions and shot texts. | Pictures: see "Put images in". |
+| "Make a Gantt chart" / ทำ Gantt chart | Read the schedule slides. Build a table with `batch_update` (`createTable`: tasks = rows, weeks = columns; colour busy cells with `updateTableCellProperties`) or bars with `createShape`. | Charts from Google Sheets are blocked; a table or shape bars is the way. |
+| "Tidy the slides" / จัดสไลด์ให้เรียบร้อย | `read_slide`, then align/resize with `updatePageElementTransform` and even font sizes with `updateTextStyle`. One slide first + `thumbnail`. | |
+| "Put images in" / ใส่รูป (incl. "make a picture of X and put it on slide 5") | `createImage` / `replaceImage` from a **public https link** (PNG/JPG/GIF). Pictures from anywhere (the web, stock sites, the client's own site) are fine by link if the user may use them. | Images the agent generates (Gemini, Codex, ChatGPT image tools) or files on the user's computer / from LINE have no public link, so they can't go in yet: tell the user plainly. Never put the client's private photos on public image sites. |
+| "Update the footer" / อัปเดต footer | `read_slide` first. If the footer is a normal text box on each slide: `replace_text` with slide `"all"`. | If it sits on the layout: the deck owner changes it once by hand (Slide → Edit theme); all slides update. |
+| "Who edited this slide?" / ใครแก้สไลด์นี้ | `list_chunks` = whose slide it is; `deck_activity` = AI edits (who, when, what). | Hand edits are only in Google Slides → File → Version history (deck editors). |
+| "Rename X to Y in the whole deck" / "Change price 189 to 199" | List every place first (watch "189.-", "1,189"), ask OK, then `replace_text` with slide `"all"`. Then say which other people's slides still contain it. | Other people's slides: they change theirs. |
+| "Translate to English" / "Fix typos" / "Shorten to fit" | `read_slide`, `replace_text` per box, `thumbnail` (length changes). List typos with slide numbers and apply after OK. | |
+| "Turn the client feedback into a checklist" | Read the feedback slides, group by content, give the list in chat; put it on a new slide (`duplicate_slide`) if asked. | |
+| "Move the whole schedule 3 days later" | Read the date tables, recompute every date with the right weekday, show old → new, ask about weekends/holidays, apply. | |
+| "Write speaker notes" | `insertText` into each slide's `speakerNotesObjectId` (from `read_slide`). | |
+| "Check everything before we send it" | `check_my_chunk` + a `thumbnail` of each slide; judge by the picture ("off page" is often a big text box or a picture placed half off on purpose). | |
+| "Move my slides after section X" | `updateSlidesPosition`, own slides only; warn that slide numbers change for everyone. | |
+| "Change the theme / fonts of the whole deck" | Fonts: slide by slide on the user's own slides (`updateTextStyle`). | Theme and master are locked for everyone: the deck owner does it by hand. |
+| "Add a reference video" | `createVideo` from YouTube. | Google Drive videos are refused. |
+| "Give slides 1–20 to A and 21–40 to B" | Deck admins only: `assign_chunk` per person (emails must be in the Visrec system). | Not an admin: ask the deck admin. |
 
 ---
 
