@@ -12,6 +12,8 @@ English).
   page from Visrec Slides (click **Allow Access**), then "Sign in with Google". Never ask the
   user to paste a password, token or login code into the chat.
 - Bot account that decks must be shared with: `visrec-slides-bot@visual-record.iam.gserviceaccount.com`
+- Who can use it: only people Nok has added to the Visrec system (a company email or a personal
+  Gmail both work). Anyone else edits the deck by hand in Google Slides; don't set them up.
 
 Before you change a config file, tell the user what you are about to add. Add only the
 `visrec-slides` entry. Don't remove or change anything else. If the file exists, make a backup copy
@@ -193,7 +195,7 @@ Rules:
 
 | What you see | What it means | What to tell the user |
 |---|---|---|
-| "… is not on the Visrec allowlist" | the email they signed in with isn't approved | Ask Nok to add that exact email. Or, if they used the wrong Google account, sign out and sign in with the right one. No reinstall needed. |
+| "… is not on the Visrec allowlist" | the email they signed in with isn't in the Visrec system | Ask Nok to add that exact email to the Visrec system. Or, if they used the wrong Google account, sign out and sign in with the right one. No reinstall needed. |
 | "Cannot register deck … Check both" | the deck isn't shared with the bot as Editor, **or** the user isn't an owner/editor of it (shared directly to their email) | The deck owner must share it with `visrec-slides-bot@visual-record.iam.gserviceaccount.com` as **Editor**, and the person registering must own or be able to edit the deck. |
 | "not shared with the bot" / "cannot edit it" | the deck isn't shared with the bot account as Editor | The deck owner must share it with `visrec-slides-bot@visual-record.iam.gserviceaccount.com` as **Editor**. |
 | "not registered on this server yet" | nobody has set the deck up yet | A deck owner/editor (usually Nok) asks their agent to `register_deck` it. |
