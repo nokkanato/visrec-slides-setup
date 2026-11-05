@@ -43,7 +43,7 @@ accounts on 2026-06-18 (per geminicli.com). Paid / Workspace Gemini CLI users ca
 ## Step 2A: Claude Code
 
 <!-- Claude Code `claude mcp add --transport http` syntax: Anthropic Claude Code docs
-     (code.claude.com/docs/en/mcp), checked 2026-11-04. -->
+     (code.claude.com/docs/en/mcp), checked 2026-11-04. Verified live 2026-11-05 (Claude Code 2.1). -->
 
 1. Run:
    ```bash
@@ -57,6 +57,8 @@ accounts on 2026-06-18 (per geminicli.com). Paid / Workspace Gemini CLI users ca
 
 ## Step 2B: Claude web / desktop / mobile
 
+<!-- Verified live on claude.ai 2026-11-05. -->
+
 You can't change these settings yourself. Walk the user through it, one step at a time:
 
 1. Open **Settings → Connectors** (on claude.ai or in the Claude desktop app). On mobile, set it
@@ -64,7 +66,11 @@ You can't change these settings yourself. Walk the user through it, one step at 
 2. Click **Add custom connector**.
    - Name: `Visrec Slides`
    - URL: `https://visrec-slides-mcp-724601136304.asia-southeast1.run.app/mcp`
-   - Leave the advanced / OAuth Client ID fields **empty**.
+   - Leave the advanced / OAuth Client ID fields **empty**. If Claude shows choices for
+     Authentication and OAuth client, keep the defaults (**Sign in now**, **Use Claude's
+     published identity**).
+   - If it says **"Couldn't check the server"**, the server was asleep: wait 15 seconds, cancel
+     and add it again.
 3. Click **Add**, then **Connect**. A page "Application Access Request" opens first: check that
    the callback address starts with `https://claude.ai/` (or `https://claude.com/`), then click
    **Allow Access**. Then sign in with Google using the email Nok added.
@@ -79,7 +85,7 @@ Then go to Step 3 (in a new chat if the tools don't appear).
 
 <!-- Source: OpenAI Codex docs, https://learn.chatgpt.com/docs/extend/mcp?surface=cli
      (redirected from developers.openai.com/codex/mcp), checked 2026-11-04.
-     Not yet tested against this server: to verify in Phase 2. -->
+     Verified live 2026-11-05 with Codex CLI 0.166. -->
 
 1. Add the server, either with the CLI:
    ```bash
@@ -96,13 +102,17 @@ Then go to Step 3 (in a new chat if the tools don't appear).
    ```
    A browser opens. The user clicks **Allow Access** on the "Application Access Request" page,
    then signs in with Google using the email Nok added. In the Codex desktop app, use
-   **Authenticate** next to the server instead.
+   **Authenticate** next to the server instead. `codex mcp add` may open this login by itself
+   right away; it times out after a few minutes, so if the user was too slow, run
+   `codex mcp login visrec-slides` again.
 3. Ask the user to restart Codex, then go to Step 3.
+4. Codex asks the user to allow each editing tool the first time (e.g. *Allow the visrec-slides
+   MCP server to run tool "replace_text"?*). Tell them to choose **Allow for this session**.
 
 ## Step 2D: Gemini CLI
 
 <!-- Source: https://geminicli.com/docs/tools/mcp-server/ , checked 2026-11-04.
-     Not yet tested against this server: to verify in Phase 2. -->
+     Not tested against this server yet (live test 2026-11-05 used Claude and Codex). -->
 
 1. Add the server for this user (all projects):
    ```bash
@@ -127,7 +137,7 @@ Then go to Step 3 (in a new chat if the tools don't appear).
 ## Step 2E: Antigravity CLI or IDE
 
 <!-- Source: https://antigravity.google/docs/mcp , checked 2026-11-04.
-     Not yet tested against this server: to verify in Phase 2. -->
+     Not tested against this server yet (live test 2026-11-05 used Claude and Codex). -->
 
 1. Add this entry to `~/.gemini/config/mcp_config.json` (create the file if missing; keep other
    entries):
@@ -169,11 +179,15 @@ decks and slides they have.
 2. Call **`read_slide(deck, slide)`** before you change a slide. It gives element objectIds,
    text and positions.
 3. Make the change:
-   - `replace_text`: change wording and keep the formatting.
-   - `duplicate_slide`: make a new slide by copying any slide as a template. The copy joins the
-     user's chunk.
-   - `delete_slide`: only for the user's own slides.
-   - `batch_update`: raw Google Slides API requests for anything else.
+   - **`replace_text(deck, slide, map)`**: change wording and keep the formatting. `map` is
+     `{"old text": "new text"}`; `slide` can be `"all"` for every slide in the chunk.
+   - **`duplicate_slide(deck, from_slide, replace_text_map?, index?)`**: make a new slide by
+     copying any slide as a template (`from_slide`), optionally swapping text on the copy. The
+     copy joins the user's chunk.
+   - **`delete_slide(deck, slide)`**: only for the user's own slides.
+   - **`batch_update(deck, requests)`**: raw Google Slides API requests for anything else.
+   - Slide numbers shift when anyone adds or deletes slides. After you add slides, re-check
+     numbers with `my_chunk`, or use the slide's objectId, which never changes.
 4. Call **`thumbnail(deck, slide)`** after each change and look at it. Fix text that doesn't fit,
    overlaps, or runs off the slide.
 5. When you're done, call **`check_my_chunk(deck)`**. Then look at a thumbnail of every changed
