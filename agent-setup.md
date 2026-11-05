@@ -192,6 +192,9 @@ decks and slides they have.
    overlaps, or runs off the slide.
 5. When you're done, call **`check_my_chunk(deck)`**. Then look at a thumbnail of every changed
    slide before you tell the user it's finished.
+6. To see what others changed recently, call **`deck_activity(deck)`** (who changed which
+   slides, when). It shows only changes made through Visrec Slides AI, not edits made by hand in
+   Google Slides (deck editors can see those in File → Version history).
 
 Rules:
 - Edit **only the user's own chunk**. Reading other slides for context is fine.
